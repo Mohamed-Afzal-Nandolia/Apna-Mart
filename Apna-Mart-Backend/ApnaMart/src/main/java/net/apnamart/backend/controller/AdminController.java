@@ -51,4 +51,12 @@ public class AdminController {
         return ResponseEntity.ok(allAdmin);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<AdminDto> loginIn(@RequestBody AdminDto adminDto){
+        if(adminService.loginIn(adminDto)){
+            return ResponseEntity.ok(adminDto);
+        }
+        return new ResponseEntity<>(adminDto, HttpStatus.NOT_FOUND);
+    }
+
 }

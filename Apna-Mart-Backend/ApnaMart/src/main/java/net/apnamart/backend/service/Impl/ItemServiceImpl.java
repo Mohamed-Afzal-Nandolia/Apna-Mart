@@ -46,7 +46,6 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public void deleteItem(Long id) {
-        ModelMapper modelMapper = new ModelMapper();
         Item item = itemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post Does not exist with id : " + id));
         itemRepository.deleteById(id);
     }
