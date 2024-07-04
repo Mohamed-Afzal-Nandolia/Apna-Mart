@@ -15,4 +15,6 @@ public interface AdminService {
     public AdminDto getUserById(Long id);
 
     public List<AdminDto> getAllAdmin();
+
+    public Boolean loginIn(AdminDto dto);
 }
