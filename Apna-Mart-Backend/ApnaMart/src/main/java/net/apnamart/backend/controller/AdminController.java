@@ -18,7 +18,7 @@ public class AdminController {
     private AdminService adminService;
 
     //POST - create admin
-    @PostMapping
+    @PostMapping("admin-signup")
     public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto){
         AdminDto savedAdmin = adminService.createAdmin(adminDto);
         return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
