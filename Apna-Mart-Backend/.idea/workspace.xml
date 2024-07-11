@@ -19,12 +19,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/ApnaMart" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Mohamed-Afzal-Nandolia"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mohamed-Afzal-Nandolia&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -85,6 +85,7 @@
       <workItem from="1719324866606" duration="697000" />
       <workItem from="1719722911148" duration="18000" />
       <workItem from="1720100301393" duration="2021000" />
+      <workItem from="1720103093392" duration="747000" />
     </task>
     <servers />
   </component>
