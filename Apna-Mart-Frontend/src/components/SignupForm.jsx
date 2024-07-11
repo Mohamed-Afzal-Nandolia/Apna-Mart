@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { registerAdmin } from "../services/AuthService";
 
 export const SignupForm = () => {
   const {
@@ -7,8 +9,18 @@ export const SignupForm = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
-    await new Promise((resolve) => {setTimeout(resolve, 5000)})
+    // await new Promise((resolve) => {setTimeout(resolve, 5000)})
+    
+    registerAdmin(data).then((response) => {
+      console.log(response.data);
+      navigate('/admin/login')
+    }).catch(error => {
+      console.error(error);
+    })
+
     console.log(data)
   }
 
@@ -19,17 +31,17 @@ export const SignupForm = () => {
         <h3 className="text-slate-950 text-sm sm:text-base ">Enter your information to create an account</h3>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
           <label className="font-semibold text-slate-950" htmlFor="email">Email: </label>
-          <input className="px-5 py-2 rounded-md border shadow-sm" name="email" type="email" placeholder="example@gmail.com" {...register("email")}/>
+          <input className="px-5 py-2 rounded-md border shadow-sm" name="email" type="email" placeholder="example@gmail.com" {...register("a_email")}/>
           {errors.email && <div className="text-red-500">{errors.email.message}</div>}
         </div>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
           <label className="font-semibold text-slate-950" htmlFor="email">Username: </label>
-          <input className="px-5 py-2 rounded-md border shadow-sm" name="username" type="text" placeholder="username" {...register("username")}/>
+          <input className="px-5 py-2 rounded-md border shadow-sm" name="username" type="text" placeholder="username" {...register("a_name")}/>
           {errors.username && <div className="text-red-500">{errors.username.message}</div>}
         </div>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
           <label className="font-semibold text-slate-950" htmlFor="email">Password: </label>
-          <input className="px-5 py-2 rounded-md border shadow-sm" name="password" type="password" placeholder="Password" {...register("password")}/>
+          <input className="px-5 py-2 rounded-md border shadow-sm" name="password" type="password" placeholder="Password" {...register("a_pass")}/>
           {errors.password && <div className="text-red-500">{errors.password.message}</div>}
         </div>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
@@ -49,5 +61,3 @@ export const SignupForm = () => {
     </form>
   );
 };
-
-
