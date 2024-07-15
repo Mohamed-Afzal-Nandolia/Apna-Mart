@@ -61,4 +61,15 @@ public class AdminServiceImpl implements AdminService {
         List<Admin> admins = adminRepository.findAll();
         return admins.stream().map((admin) -> modelMapper.map(admin, AdminDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public Boolean loginIn(AdminDto dto) {
+        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+
+        Admin admin = adminRepository.findByEmail(dto.getA_email());
+        if(admin != null && bCrypt.matches(dto.getA_pass(), admin.getA_pass())){
+            return true;
+        }
+        return false;
+    }
 }
