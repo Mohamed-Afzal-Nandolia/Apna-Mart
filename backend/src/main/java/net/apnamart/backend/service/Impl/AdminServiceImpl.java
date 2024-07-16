@@ -7,7 +7,12 @@ import net.apnamart.backend.model.AdminDto;
 import net.apnamart.backend.repository.AdminRepository;
 import net.apnamart.backend.service.AdminService;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +32,7 @@ public class AdminServiceImpl implements AdminService {
         admin.setA_pass(encryptedPassword);//saving the password
 
         Admin savedAdmin = adminRepository.save(admin);
+
         return modelMapper.map(admin, AdminDto.class);
     }
 
