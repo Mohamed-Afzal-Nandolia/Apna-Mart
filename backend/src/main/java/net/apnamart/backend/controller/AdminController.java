@@ -3,8 +3,11 @@ package net.apnamart.backend.controller;
 import lombok.AllArgsConstructor;
 import net.apnamart.backend.model.AdminDto;
 import net.apnamart.backend.service.AdminService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +20,6 @@ public class AdminController {
 
     private AdminService adminService;
 
-    //POST - create admin
-    @PostMapping("admin-signup")
-    public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto){
-        AdminDto savedAdmin = adminService.createAdmin(adminDto);
-        return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
-    }
 
     //PUT - update admin
     @PutMapping("{id}")
@@ -51,7 +48,14 @@ public class AdminController {
         return ResponseEntity.ok(allAdmin);
     }
 
-    @PostMapping("/login")
+    //POST - create admin
+    @PostMapping("admin-signup")
+    public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto){
+        AdminDto savedAdmin = adminService.createAdmin(adminDto);
+        return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
+    }
+
+    @PostMapping("admin-login")
     public ResponseEntity<AdminDto> loginIn(@RequestBody AdminDto adminDto){
         if(adminService.loginIn(adminDto)){
             return ResponseEntity.ok(adminDto);
