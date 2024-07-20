@@ -17,4 +17,5 @@ public interface AdminService {
     public List<AdminDto> getAllAdmin();
 
     public Boolean loginIn(AdminDto dto);
+
 }
