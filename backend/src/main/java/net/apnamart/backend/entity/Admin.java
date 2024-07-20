@@ -20,7 +20,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long a_id;
 
-    @Column(name = "a_name")
+    @Column(name = "a_name", unique = true)
     private String a_name;
 
     @Column(name = "a_email", nullable = false, unique = true)
