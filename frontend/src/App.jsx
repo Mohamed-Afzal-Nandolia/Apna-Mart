@@ -3,6 +3,7 @@ import { AdminLayout } from "./pages/AdminLayout"
 import { AdminSignup } from "./pages/AdminSignup"
 import { AdminSignin } from "./pages/AdminSignin"
 import { Dashboard } from "./pages/Dashboard"
+import { NotFound } from "./pages/NotFound"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="signin" element={<AdminSignin />}/> 
         <Route path="dashboard" element={<Dashboard />}/> 
       </Route>
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   )
 }
