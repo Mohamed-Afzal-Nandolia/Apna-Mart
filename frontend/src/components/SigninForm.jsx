@@ -10,8 +10,6 @@ export const SigninForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // await new Promise((resolve) => {setTimeout(resolve, 5000)})
-    
     registerAdmin(data).then((response) => {
       console.log(response.data);
       redirect('/admin/dashboard')

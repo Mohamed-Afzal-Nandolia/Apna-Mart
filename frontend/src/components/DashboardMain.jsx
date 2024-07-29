@@ -1,13 +1,18 @@
 import propTypes from "prop-types"
+import { Products } from "./Products"
 
 export const DashboardMain = ({searchParams}) => {
-  return (
-    <div>
-        {searchParams}
-    </div>
-  )
+  {
+    if (searchParams === "Products") {
+      return (
+        <Products />
+      )
+    }
+  }
 }
 
+
+
 DashboardMain.propTypes = {
-    searchParams: propTypes.object
+    searchParams: propTypes.string
 }
