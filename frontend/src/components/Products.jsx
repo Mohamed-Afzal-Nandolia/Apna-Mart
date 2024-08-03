@@ -45,8 +45,8 @@ export const Products = () => {
     );
   } else {
     return (
-      <div className="overflow-x-scroll w-full">
-        <Table className="rounded-none drop-shadow-sm">
+      <div className="overflow-x-scroll w-full p-5">
+        <Table className="">
           <Table.Head>
             <Table.HeadCell>Product Id</Table.HeadCell>
             <Table.HeadCell>Product name</Table.HeadCell>

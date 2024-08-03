@@ -29,7 +29,7 @@ export const Dashboard = () => {
               icon={HiChartPie}
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "Dashboard");
+                  prev.set("tab", "dashboard");
                   return prev;
                 });
               }}
@@ -42,7 +42,7 @@ export const Dashboard = () => {
               labelColor="dark"
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "Kanban");
+                  prev.set("tab", "kanban");
                   return prev;
                 });
               }}
@@ -54,7 +54,7 @@ export const Dashboard = () => {
               label="3"
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "Inbox");
+                  prev.set("tab", "inbox");
                   return prev;
                 });
               }}
@@ -65,7 +65,7 @@ export const Dashboard = () => {
               icon={HiUser}
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "Users");
+                  prev.set("tab", "users");
                   return prev;
                 });
               }}
@@ -75,13 +75,13 @@ export const Dashboard = () => {
             <Sidebar.Collapse icon={HiShoppingBag} label="Products">
               <Sidebar.Item onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "Products");
+                  prev.set("tab", "products");
                   return prev;
                 });
               }}>Product List</Sidebar.Item>
               <Sidebar.Item onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "addProduct");
+                  prev.set("tab", "add-product");
                   return prev;
                 });
               }}>Add Product</Sidebar.Item>
@@ -90,7 +90,7 @@ export const Dashboard = () => {
               icon={HiArrowSmRight}
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "SignIn");
+                  prev.set("tab", "signin");
                   return prev;
                 });
               }}
@@ -101,7 +101,7 @@ export const Dashboard = () => {
               icon={HiTable}
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set("tab", "SignUp");
+                  prev.set("tab", "aignup");
                   return prev;
                 });
               }}
