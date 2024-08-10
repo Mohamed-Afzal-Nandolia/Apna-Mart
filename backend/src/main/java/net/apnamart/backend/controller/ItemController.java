@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import net.apnamart.backend.model.ItemDto;
 import net.apnamart.backend.service.ItemService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -18,7 +21,7 @@ public class ItemController {
     private ItemService itemService;
 
     // POST - create item
-    @PostMapping
+    @PostMapping("createItem")
     public ResponseEntity<ItemDto> createItem(@RequestBody ItemDto itemDto){
         ItemDto item = itemService.createItem(itemDto);
         return new ResponseEntity<>(item, HttpStatus.CREATED);
@@ -50,6 +53,11 @@ public class ItemController {
     public ResponseEntity<String> deleteItem(@PathVariable Long id){
         itemService.deleteItem(id);
         return ResponseEntity.ok("Item deleted Successfully");
+    }
+
+    @PostMapping("/uploadImage")
+    public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        return itemService.uploadImage(file);
     }
 
 }

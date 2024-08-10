@@ -20,7 +20,9 @@ public class ItemDto {
 
     private Long i_price;
 
-    private Byte[] i_image;
+    private String i_image_path;
+
+    private String i_type;
 
     private Long i_quantity;
 

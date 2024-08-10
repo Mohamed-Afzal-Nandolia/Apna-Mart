@@ -11,7 +11,6 @@ import org.modelmapper.internal.bytebuddy.dynamic.loading.InjectionClassLoader;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "admin")
 public class Admin {

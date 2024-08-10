@@ -1,19 +1,15 @@
 package net.apnamart.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.sql.Blob;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-
+@Builder
+@Table(name = "item")
 public class Item {
 
     @Id
@@ -26,9 +22,11 @@ public class Item {
     @Column(name = "i_price")
     private Long i_price;
 
-    @Lob//@Lob: This annotation specifies that the i_image field should be handled as a Large Object, which is suitable for storing large binary data like images.
     @Column(name = "i_image")
-    private Byte[] i_image;
+    private String i_image_path;
+
+    @Column(name = "i_type")
+    private String i_type;
 
     @Column(name = "i_quantity")
     private Long i_quantity;
@@ -38,5 +36,4 @@ public class Item {
 
     @Column(name = "i_availability")
     private Boolean i_availability;
-
 }
