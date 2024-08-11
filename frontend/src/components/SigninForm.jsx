@@ -12,6 +12,7 @@ export const SigninForm = () => {
   const onSubmit = async (data) => {
     registerAdmin(data).then((response) => {
       console.log(response.data);
+      localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
       redirect('/admin/dashboard')
     }).catch(error => {
       console.error(error);

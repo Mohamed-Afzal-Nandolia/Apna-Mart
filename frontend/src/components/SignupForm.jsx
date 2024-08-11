@@ -14,6 +14,7 @@ export const SignupForm = () => {
     
     registerAdmin(data).then((response) => {
       console.log(response.data);
+      localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
       redirect('/admin/login')
     }).catch(error => {
       console.error(error);
