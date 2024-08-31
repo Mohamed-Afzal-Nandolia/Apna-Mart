@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
-import { Link, redirect } from "react-router-dom";
-import { registerAdmin } from "../services/AuthService";
+import { Link, useNavigate } from "react-router-dom";
+import { loginAdmin } from "../services/AuthService";
 
 export const SigninForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -10,10 +12,10 @@ export const SigninForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    registerAdmin(data).then((response) => {
+    loginAdmin(data).then((response) => {
       console.log(response.data);
       localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
-      redirect('/admin/dashboard')
+      navigate('/admin/dashboard')
     }).catch(error => {
       console.error(error);
     })

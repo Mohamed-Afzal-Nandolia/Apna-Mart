@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.security.Principal;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

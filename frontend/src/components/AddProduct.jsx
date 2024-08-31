@@ -7,12 +7,40 @@ import {
   Button,
 } from "flowbite-react";
 import { useForm } from "react-hook-form";
+import { addProduct, REST_API_BASE_URL } from "../services/AuthService";
+import axios from "axios";
+
 
 export const AddProduct = () => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append('i_name', data.i_name);
+    formData.append('i_price', data.i_price);
+    formData.append('i_quantity', data.i_quantity);
+    formData.append('i_description', data.i_description);
+    formData.append('i_availability', data.i_availability);
+    formData.append('i_file', data.i_file[0]); // Ensure the file is correctly appended
+    console.log(formData);
+    
+    addProduct(formData).then((response) => {
+      console.log(response.data);
+
+    }).catch(error => {
+      console.error(error);
+    })
+
+    // try {
+    //   const response = await axios.post("http://localhost:8085/api/item/createItem", formData, {headers: {Authorization: localStorage.getItem("Authorization")}});
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   const responseData = await response.json();
+    //   console.log(responseData);
+    // } catch (error) {
+    //   console.error('There was a problem with your fetch operation:', error);
+    // }
   };
 
   return (
@@ -32,7 +60,7 @@ export const AddProduct = () => {
             id="productName"
             type="text"
             sizing="md"
-            {...register("productName")}
+            {...register("i_name")}
           />
         </div>
         <div>
@@ -43,7 +71,7 @@ export const AddProduct = () => {
             id="productPrice"
             type="text"
             sizing="md"
-            {...register("productPrice")}
+            {...register("i_price")}
           />
         </div>
         <div>
@@ -54,7 +82,7 @@ export const AddProduct = () => {
             id="productQuantity"
             type="text"
             sizing="md"
-            {...register("productQuantity")}
+            {...register("i_quantity")}
           />
         </div>
         <div>
@@ -66,12 +94,12 @@ export const AddProduct = () => {
             rows={3}
             type="text"
             sizing="lg"
-            {...register("productDescription")}
+            {...register("i_description")}
           />
         </div>
         <fieldset
           className="flex max-w-md gap-4"
-          {...register("productAvailability")}
+          {...register("i_availability")}
         >
           <legend className="mb-4">Availablity</legend>
           <div className="flex items-center gap-2">
@@ -91,7 +119,7 @@ export const AddProduct = () => {
             id="file"
             name="productIMG"
             helperText="file size should be less than 10MB"
-            {...register("productImage")}
+            {...register("i_file")}
           />
         </div>
         <Button type="submit" color="dark">

@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
-import { Link, redirect } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { registerAdmin } from "../services/AuthService";
 
 export const SignupForm = () => {
+  const navigate = useNavigate();
+  
   const {
     register,
     handleSubmit,
@@ -15,7 +17,7 @@ export const SignupForm = () => {
     registerAdmin(data).then((response) => {
       console.log(response.data);
       localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
-      redirect('/admin/login')
+      navigate('/admin/login');
     }).catch(error => {
       console.error(error);
     })
