@@ -16,32 +16,25 @@ export const AddProduct = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('i_name', data.i_name);
-    formData.append('i_price', data.i_price);
-    formData.append('i_quantity', data.i_quantity);
-    formData.append('i_description', data.i_description);
-    formData.append('i_availability', data.i_availability);
-    formData.append('i_file', data.i_file[0]); // Ensure the file is correctly appended
-    console.log(formData);
-    
+
+    // Convert the item object to JSON string before appending
+    formData.append("item", new Blob([JSON.stringify({
+      i_name: data.i_name,
+      i_price: data.i_price,
+      i_quantity: data.i_quantity,
+      i_description: data.i_description,
+      i_availability: data.i_availability,
+    })], { type: "application/json" }));
+
+    formData.append("file", data.i_file[0]);  // Ensure the file is correctly appended
+
     addProduct(formData).then((response) => {
       console.log(response.data);
-
     }).catch(error => {
       console.error(error);
-    })
-
-    // try {
-    //   const response = await axios.post("http://localhost:8085/api/item/createItem", formData, {headers: {Authorization: localStorage.getItem("Authorization")}});
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   const responseData = await response.json();
-    //   console.log(responseData);
-    // } catch (error) {
-    //   console.error('There was a problem with your fetch operation:', error);
-    // }
+    });
   };
+
 
   return (
     <div className="w-full h-auto flex flex-col place-items-center">
@@ -103,11 +96,11 @@ export const AddProduct = () => {
         >
           <legend className="mb-4">Availablity</legend>
           <div className="flex items-center gap-2">
-            <Radio id="yesOption" name="options" value="Yes" defaultChecked />
+            <Radio id="yesOption" name="options" value={true} defaultChecked />
             <Label htmlFor="yesOption">Yes</Label>
           </div>
           <div className="flex items-center gap-2">
-            <Radio id="noOption" name="options" value="No" />
+            <Radio id="noOption" name="options" value={false} />
             <Label htmlFor="noOption">No</Label>
           </div>
         </fieldset>
