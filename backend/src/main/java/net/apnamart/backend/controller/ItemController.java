@@ -21,11 +21,24 @@ public class ItemController {
     private ItemService itemService;
 
     // POST - create item
-    @PostMapping("create-item")
-    public ResponseEntity<ItemDto> createItem(@RequestBody ItemDto itemDto){
+    @PostMapping(value = "create-item", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<ItemDto> createItem(
+            @RequestPart("item") ItemDto itemDto,
+            @RequestPart("file") MultipartFile file) throws IOException {
+
+        // Upload the image and get the file path
+        String imagePath = itemService.uploadImage(file);
+
+        // Set the image path and type in the ItemDto
+        itemDto.setI_image_path(imagePath);
+        itemDto.setI_type(file.getContentType()); // Setting the content type as the item type
+
+        // Create the item
         ItemDto item = itemService.createItem(itemDto);
+
         return new ResponseEntity<>(item, HttpStatus.CREATED);
     }
+
 
     // PUT - update item
     @PutMapping("{id}")
@@ -55,9 +68,11 @@ public class ItemController {
         return ResponseEntity.ok("Item deleted Successfully");
     }
 
+    /*
+    //Dont need this now as i have merge this in to create-item method
     @PostMapping("/uploadImage")
     public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         return itemService.uploadImage(file);
     }
-
+    */
 }
