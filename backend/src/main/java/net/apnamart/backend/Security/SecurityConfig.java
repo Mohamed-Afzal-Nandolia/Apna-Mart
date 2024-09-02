@@ -23,15 +23,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())
-                .authorizeRequests().
-                requestMatchers("/test").authenticated().requestMatchers("/auth/login").permitAll()
-                //requestMatchers("/test").authenticated().requestMatchers("/auth/login", "api/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .authorizeRequests()
+                .requestMatchers("/test").authenticated()
+                .requestMatchers("/auth/login", "/api/admin-login", "/api/admin-signup").permitAll() // Add your endpoints here
+                //auth/login infuture should be use to directly login without explicitly login via credentials
+                .anyRequest().authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
 }
