@@ -21,7 +21,7 @@ public class ItemController {
     private ItemService itemService;
 
     // POST - create item
-    @PostMapping("createItem")
+    @PostMapping("create-item")
     public ResponseEntity<ItemDto> createItem(@RequestBody ItemDto itemDto){
         ItemDto item = itemService.createItem(itemDto);
         return new ResponseEntity<>(item, HttpStatus.CREATED);
@@ -42,7 +42,7 @@ public class ItemController {
     }
 
     // GET - get all items
-    @GetMapping
+    @GetMapping("all-items")
     public ResponseEntity<List<ItemDto>> getAllItem(){
         List<ItemDto> allItems = itemService.getAllItems();
         return ResponseEntity.ok(allItems);
