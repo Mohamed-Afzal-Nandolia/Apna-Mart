@@ -9,13 +9,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class UserDto {
 
-    private Long a_id;
+    private Long u_id;
 
-    private String a_name;
+    private String u_name;
 
-    private String a_email;
+    private String u_email;
 
-    private String a_pass;
+    private String u_pass;
+
+    private String u_address;
+
 }
