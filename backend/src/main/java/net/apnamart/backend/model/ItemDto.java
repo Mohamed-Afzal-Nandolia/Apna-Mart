@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Blob;
 
@@ -29,4 +30,5 @@ public class ItemDto {
     private String i_description;
 
     private Boolean i_availability;
+
 }

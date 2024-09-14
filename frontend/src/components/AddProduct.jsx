@@ -15,6 +15,7 @@ export const AddProduct = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("item", {
+
       i_name: data.i_name,
       i_price: data.i_price,
       i_quantity: data.i_quantity,
@@ -39,6 +40,7 @@ export const AddProduct = () => {
     }
   };
 
+
   return (
     <div className="w-full h-auto flex flex-col place-items-center">
       <form
@@ -56,7 +58,7 @@ export const AddProduct = () => {
             id="productName"
             type="text"
             sizing="md"
-            {...register("productName")}
+            {...register("i_name")}
           />
         </div>
         <div>
@@ -67,7 +69,7 @@ export const AddProduct = () => {
             id="productPrice"
             type="text"
             sizing="md"
-            {...register("productPrice")}
+            {...register("i_price")}
           />
         </div>
         <div>
@@ -78,7 +80,7 @@ export const AddProduct = () => {
             id="productQuantity"
             type="text"
             sizing="md"
-            {...register("productQuantity")}
+            {...register("i_quantity")}
           />
         </div>
         <div>
@@ -90,20 +92,20 @@ export const AddProduct = () => {
             rows={3}
             type="text"
             sizing="lg"
-            {...register("productDescription")}
+            {...register("i_description")}
           />
         </div>
         <fieldset
           className="flex max-w-md gap-4"
-          {...register("productAvailability")}
+          {...register("i_availability")}
         >
           <legend className="mb-4">Availablity</legend>
           <div className="flex items-center gap-2">
-            <Radio id="yesOption" name="options" value="Yes" defaultChecked />
+            <Radio id="yesOption" name="options" value={true} defaultChecked />
             <Label htmlFor="yesOption">Yes</Label>
           </div>
           <div className="flex items-center gap-2">
-            <Radio id="noOption" name="options" value="No" />
+            <Radio id="noOption" name="options" value={false} />
             <Label htmlFor="noOption">No</Label>
           </div>
         </fieldset>
@@ -115,7 +117,7 @@ export const AddProduct = () => {
             id="file"
             name="productIMG"
             helperText="file size should be less than 10MB"
-            {...register("productImage")}
+            {...register("i_file")}
           />
         </div>
         <Button type="submit" color="dark">
