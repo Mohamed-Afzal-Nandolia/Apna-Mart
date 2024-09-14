@@ -7,12 +7,36 @@ import {
   Button,
 } from "flowbite-react";
 import { useForm } from "react-hook-form";
+import { REST_API_BASE_URL } from "../services/AuthService";
 
 export const AddProduct = () => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("item", {
+      i_name: data.i_name,
+      i_price: data.i_price,
+      i_quantity: data.i_quantity,
+      i_description: data.i_description,
+      i_availability: data.i_availability,
+    });
+
+    formData.append("file", data.i_file[0]); // Ensure the file is correctly appended
+
+    try {
+      const response = await fetch(REST_API_BASE_URL + "api/item", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error("There was a problem with your fetch operation:", error);
+    }
   };
 
   return (

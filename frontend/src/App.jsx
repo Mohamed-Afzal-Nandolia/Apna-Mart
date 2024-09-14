@@ -4,6 +4,7 @@ import { AdminSignup } from "./pages/AdminSignup"
 import { AdminSignin } from "./pages/AdminSignin"
 import { Dashboard } from "./pages/Dashboard"
 import { NotFound } from "./pages/NotFound"
+import { HomePage } from "./pages/HomePage"
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="signin" element={<AdminSignin />}/> 
         <Route path="dashboard" element={<Dashboard />}/> 
       </Route>
+      <Route path="/" element={<HomePage />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   )
