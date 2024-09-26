@@ -7,9 +7,7 @@ import {
   Button,
 } from "flowbite-react";
 import { useForm } from "react-hook-form";
-import { addProduct, REST_API_BASE_URL } from "../services/AuthService";
-import axios from "axios";
-
+import { addProduct } from "../services/AuthService";
 
 export const AddProduct = () => {
   const { register, handleSubmit } = useForm();
