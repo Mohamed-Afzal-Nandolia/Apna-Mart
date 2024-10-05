@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // import { Badge } from "/components/ui/badge"
-import img from "C:/Users/efufo/Downloads/welcome.png";
+import img from "D:/Downloads/Welcome.jpeg";
 
 export const HomePage = () => {
   const items = [
