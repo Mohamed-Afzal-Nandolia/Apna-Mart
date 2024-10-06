@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,7 +98,9 @@ public class ItemServiceImpl implements ItemService{
     public List<ItemDto> getAllItems() {
         ModelMapper modelMapper = new ModelMapper();
         List<Item> allItems = itemRepository.findAll();
-        return allItems.stream().map((item) -> modelMapper.map(item, ItemDto.class)).collect(Collectors.toList());
+        List<ItemDto> itemDtoList = allItems.stream().map((item) -> modelMapper.map(item, ItemDto.class)).collect(Collectors.toList());
+        Collections.reverse(itemDtoList);
+        return itemDtoList;
     }
 
     @Override
