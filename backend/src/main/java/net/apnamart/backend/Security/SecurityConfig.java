@@ -25,7 +25,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .requestMatchers("/test").authenticated()
-                .requestMatchers("/auth/login", "/api/admin-login", "/api/admin-signup").permitAll() // Add your endpoints here
+                .requestMatchers("/auth/login", "/api/admin-login", "/api/admin-signup", "/images/*").permitAll() // Add your endpoints here
                 //auth/login infuture should be use to directly login without explicitly login via credentials
                 .anyRequest().authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
