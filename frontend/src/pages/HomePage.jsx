@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAllItems } from "../hooks/useAllItems";
 import { useEffect } from "react";
+import { Badge } from "flowbite-react";
 
 
 export const HomePage = () => {
@@ -82,12 +83,12 @@ export const HomePage = () => {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <div className="text-lg font-semibold">${item.i_price}</div>
-                    {/* <Badge
-                        variant={item.inStock ? "success" : "danger"}
+                    <Badge
+                        variant={item.i_availability ? "success" : "danger"}
                         className="rounded-full px-3 py-1 text-xs font-medium"
                       >
-                        {item.inStock ? `In Stock (${item.quantity})` : "Out of Stock"}
-                      </Badge> */}
+                        {item.i_availability ? `In Stock (${item.i_quantity})` : "Out of Stock"}
+                      </Badge>
                   </div>
                 </div>
               </div>
