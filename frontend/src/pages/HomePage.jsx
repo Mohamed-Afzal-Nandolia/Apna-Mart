@@ -68,27 +68,29 @@ export const HomePage = () => {
                     <span className="sr-only">View {item.i_name}</span>
                   </Link>
                 </div>
-                <img
-                  src={item.i_image_path}
-                  alt={item.i_name}
-                  width={400}
-                  height={300}
-                  className="h-64 w-full object-cover"
-                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
-                />
+                <div className="flex justify-center">
+                  <img
+                    src={item.i_image_path}
+                    alt={item.i_name}
+                    width={400}
+                    height={300}
+                    className="h-64 w-64 object-cover"
+                    style={{ aspectRatio: "400/300" }}
+                  />
+                </div>
                 <div className="bg-background p-4">
                   <h3 className="text-xl font-bold">{item.i_name}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">
                     {item.i_description}
                   </p>
                   <div className="mt-4 flex items-center justify-between">
-                    <div className="text-lg font-semibold">${item.i_price}</div>
+                    <div className="text-lg font-semibold">₹{item.i_price}</div>
                     <Badge
-                        variant={item.i_availability ? "success" : "danger"}
-                        className="rounded-full px-3 py-1 text-xs font-medium"
-                      >
-                        {item.i_availability ? `In Stock (${item.i_quantity})` : "Out of Stock"}
-                      </Badge>
+                      variant={item.i_availability ? "success" : "danger"}
+                      className="rounded-full px-3 py-1 text-xs font-medium"
+                    >
+                      {item.i_availability ? `In Stock (${item.i_quantity})` : "Out of Stock"}
+                    </Badge>
                   </div>
                 </div>
               </div>
