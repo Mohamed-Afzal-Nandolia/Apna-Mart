@@ -12,4 +12,6 @@ public class JwtResponse {
     private String JwtToken;
 
     private String a_name;
+
+    private String u_name;
 }

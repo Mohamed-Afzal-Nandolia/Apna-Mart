@@ -14,4 +14,8 @@ public class JwtRequest {
 
     private String a_pass;
 
+    private String u_email;
+
+    private String u_pass;
+
 }

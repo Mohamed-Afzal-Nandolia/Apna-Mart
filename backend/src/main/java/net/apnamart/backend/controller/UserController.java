@@ -43,18 +43,4 @@ public class UserController {
         return ResponseEntity.ok(allUsers);
     }
 
-    //POST - create admin
-    @PostMapping("signup")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
-        UserDto savedUser = userService.createUser(userDto);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
-
-    @PostMapping("login")
-    public ResponseEntity<UserDto> loginIn(@RequestBody UserDto userDto){
-        if(userService.loginIn(userDto)){
-            return ResponseEntity.ok(userDto);
-        }
-        return new ResponseEntity<>(userDto, HttpStatus.NOT_FOUND);
-    }
 }

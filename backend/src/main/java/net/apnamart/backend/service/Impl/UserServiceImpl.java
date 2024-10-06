@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
         User user = userRepository.findByEmail(userdto.getU_email());
-        if(user != null && bCrypt.matches(userdto.getU_pass(), userdto.getU_pass())){
+        if(user != null && bCrypt.matches(userdto.getU_pass(), user.getU_pass())){
             return true;
         }
         return false;

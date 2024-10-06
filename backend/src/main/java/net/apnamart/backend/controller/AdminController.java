@@ -48,19 +48,4 @@ public class AdminController {
         return ResponseEntity.ok(allAdmin);
     }
 
-    //POST - create admin
-    @PostMapping("admin-signup")
-    public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto){
-        AdminDto savedAdmin = adminService.createAdmin(adminDto);
-        return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
-    }
-
-    @PostMapping("admin-login")
-    public ResponseEntity<AdminDto> loginIn(@RequestBody AdminDto adminDto){
-        if(adminService.loginIn(adminDto)){
-            return ResponseEntity.ok(adminDto);
-        }
-        return new ResponseEntity<>(adminDto, HttpStatus.NOT_FOUND);
-    }
-
 }

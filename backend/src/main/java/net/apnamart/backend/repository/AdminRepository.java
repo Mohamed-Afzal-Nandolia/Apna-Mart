@@ -2,6 +2,7 @@ package net.apnamart.backend.repository;
 
 
 import net.apnamart.backend.entity.Admin;
+import net.apnamart.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
