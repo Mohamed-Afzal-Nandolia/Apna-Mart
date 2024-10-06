@@ -26,7 +26,7 @@ public class ItemServiceImpl implements ItemService{
 
     private ItemRepository itemRepository;
 
-    private final String FOLDER_PATH = "D:/GitHub/All Repositories/Apna-Mart/backend/src/main/java/images";
+    private final String FOLDER_PATH = "D:/GitHub/All Repositories/Apna-Mart/backend/src/main/resources/static/images";
 
     @Override
     public String uploadImage(MultipartFile file) throws IOException {
@@ -35,14 +35,15 @@ public class ItemServiceImpl implements ItemService{
         if (!folder.exists()) {
             folder.mkdirs();
         }
-        String ImgName = UUID.randomUUID().toString() + file.getOriginalFilename();
+        String ImgName = UUID.randomUUID().toString()+".jpg";
 
         // Save the file to the folder
         Path filePath = Paths.get(FOLDER_PATH, ImgName);
         Files.write(filePath, file.getBytes());
 
         // Return the file path (relative to your app's root directory or as needed)
-        return filePath.toString();
+        //return filePath.toString();
+        return "http://localhost:8085/images/"+ImgName;
     }
 
     @Override
