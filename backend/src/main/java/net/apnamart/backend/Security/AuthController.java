@@ -54,7 +54,7 @@ public class AuthController {
     @PostMapping("/admin/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
-        this.doAuthenticate(request.getA_email(), request.getA_pass());
+        this.doAuthenticateAdmin(request.getA_email(), request.getA_pass());
 
         Admin admin = adminRepository.findByEmail(request.getA_email());
 
@@ -76,17 +76,28 @@ public class AuthController {
         return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
     }
 
-    private void doAuthenticate(String a_email, String a_pass) {
+    private void doAuthenticateAdmin(String a_email, String a_pass) {
 
         BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
         Admin admin = adminRepository.findByEmail(a_email);
         if(admin != null && bCrypt.matches(a_pass, admin.getA_pass())){
-            System.out.println("INSIDE DOAUTHENTICATION LINE NUMBER 66");
+            System.out.println("Admin is Authenticated Successfully");
         }
         else{
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+            throw new BadCredentialsException(" Invalid Username or Password!!");
         }
 
+    }
+
+    private void doAuthenticateUser(String u_email, String u_pass){
+        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+        net.apnamart.backend.entity.User user = userRepository.findByEmail(u_email);
+        if(user != null && bCrypt.matches(u_pass, user.getU_pass())){
+            System.out.println("User is Authenticated Successfully");
+        }
+        else{
+            throw new BadCredentialsException(" Invalid Username or Password!!");
+        }
     }
 
     //POST - create admin
@@ -96,20 +107,11 @@ public class AuthController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-//    @PostMapping("/user/login")
-//    public ResponseEntity<UserDto> loginIn(@RequestBody UserDto userDto){
-//        if(userService.loginIn(userDto)){
-//            return ResponseEntity.ok(userDto);
-//        }
-//        return new ResponseEntity<>(userDto, HttpStatus.NOT_FOUND);
-//
-//    }
-
     @PostMapping("/user/login")
     public ResponseEntity<JwtResponse> loginIn(@RequestBody JwtRequest request) {
 
         // Authenticate the user (assuming you have an authentication method)
-        this.doAuthenticate(request.getU_email(), request.getU_pass());
+        this.doAuthenticateUser(request.getU_email(), request.getU_pass());
 
         // Fetch the user from the database using email
         net.apnamart.backend.entity.User user = userRepository.findByEmail(request.getU_email());
@@ -132,26 +134,6 @@ public class AuthController {
         // Return the response
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
-    /*
-     @PostMapping("/admin/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
-
-        this.doAuthenticate(request.getA_email(), request.getA_pass());
-
-        Admin admin = adminRepository.findByEmail(request.getA_email());
-
-        UserDetails user = User.builder().username(admin.getA_name()).password(admin.getA_pass()).build();
-        new InMemoryUserDetailsManager(user);
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(admin.getA_name());
-        String token = this.helper.generateToken(user);
-
-        JwtResponse response = JwtResponse.builder()
-                .JwtToken(token)
-                .a_name(user.getUsername()).build();
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }*/
 
     //Principal represents the current user
     @GetMapping("/home/current-user")
