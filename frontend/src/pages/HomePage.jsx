@@ -49,7 +49,6 @@ export const HomePage = () => {
             <Link
               href="#"
               className="text-main-blue inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground px-6 text-sm font-medium text-primary shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 "
-              prefetch={false}
             >
               Shop Now
             </Link>
@@ -74,7 +73,11 @@ export const HomePage = () => {
               Explore our wide range of high-quality, sustainable products.
             </p>
           </div>
-          <DiscoverSection allItems={allItems} />  
+          <DiscoverSection 
+            allItems={allItems} 
+            cartItems={cartItems} 
+            updateCartItems={updateCartItems}
+          />  
         </section>
       </main>
     </div>
