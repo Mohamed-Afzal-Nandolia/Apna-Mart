@@ -15,7 +15,7 @@ export const LoginFormAdmin = () => {
     loginAdmin(data).then((response) => {
       console.log(response.data);
       localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
-      navigate('/user/dashboard')
+      navigate('/admin/dashboard')
     }).catch(error => {
       console.error(error);
     })

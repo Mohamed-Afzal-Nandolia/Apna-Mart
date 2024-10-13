@@ -64,8 +64,8 @@ export const SignupFormUser = () => {
           </label>
           <input
             className="px-5 py-2 rounded-md border shadow-sm"
-            name="email"
-            type="email"
+            name="username"
+            type="text"
             placeholder="username"
             {...register("u_name")}
           />

@@ -9,6 +9,9 @@ import { AdminLogin } from "./pages/AdminLogin"
 import { UserLogin } from "./pages/UserLogin"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { ItemPage } from "./pages/ItemPage"
+import { Checkout } from "./pages/Checkout"
+import { Payment } from "./pages/Payment"
 
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
         </Route>
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<NotFound />} />
+        <Route path="/item/:itemId" element={<ItemPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
       <ToastContainer />
     </>
