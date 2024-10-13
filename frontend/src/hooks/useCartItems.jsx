@@ -7,6 +7,7 @@ export const useCartItems = () => {
   });
 
   const updateCartItems = (newCartItems) => {
+    console.log("Updating cart items:", newCartItems);
     setCartItems(newCartItems);
     localStorage.setItem("cartItems", JSON.stringify(newCartItems));
   };

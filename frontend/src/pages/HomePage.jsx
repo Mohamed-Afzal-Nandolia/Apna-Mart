@@ -13,6 +13,7 @@ export const HomePage = () => {
   const { allItems, loading, error } = useAllItems();
   const [ isCartOpen, setIsCartOpen ] = useState(false);
   const { cartItems, updateCartItems } = useCartItems();
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   useEffect(() => {
     if (error) {
@@ -26,9 +27,13 @@ export const HomePage = () => {
     setIsCartOpen(!isCartOpen);
   }
 
+  useEffect(() => {
+    setCartItemsCount(cartItems.length);
+  }, [cartItems]);
+
   return (
     <div className="flex flex-col">
-      <Header toggleCart={toggleCart} cartItemsCount={cartItems.length} />
+      <Header toggleCart={toggleCart} cartItemsCount={cartItemsCount} />
       <CartOverlay 
         isOpen={isCartOpen} 
         onClose={() => setIsCartOpen(false)} 

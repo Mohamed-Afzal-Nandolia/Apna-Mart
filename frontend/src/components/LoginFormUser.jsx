@@ -50,7 +50,7 @@ export const LoginFormUser = () => {
             name="email"
             type="email"
             placeholder="example@gmail.com"
-            {...register("a_email")}
+            {...register("u_email")}
           />
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
@@ -65,7 +65,7 @@ export const LoginFormUser = () => {
             name="password"
             type="password"
             placeholder="Password"
-            {...register("a_pass")}
+            {...register("u_pass")}
           />
           {errors.password && (
             <div className="text-red-500">{errors.password.message}</div>
