@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { addToCart } from "../helpers/addToCart";
@@ -35,13 +35,7 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
           <div
             key={item.i_id}
             className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl bg-white flex flex-col justify-start"
-            
           >
-            <div className="absolute inset-0 z-10 pointer-events-none">
-              <Link to="#" className="absolute inset-0 pointer-events-auto">
-                <span className="sr-only">View {item.i_name}</span>
-              </Link>
-            </div>
             <div className="flex justify-center p-4">
               <img
                 src={item.i_image_path}
@@ -51,7 +45,10 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
               />
             </div>
             <div className="p-4">
-              <h3 className="text-xl font-bold text-main-blue cursor-pointer" onClick={() => navigate(`/item/${item.i_id}`)}>
+              <h3 
+                className="text-xl font-bold text-main-blue cursor-pointer"
+                onClick={() => navigate(`/item/${item.i_id}`)}
+              >
                 {item.i_name}
               </h3>
               <p className="mt-3 mb-3 text-sm">{item.i_description}</p>
@@ -76,7 +73,7 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
                 <button
                   className="border bg-main-green text-white bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary z-20 relative"
                   onClick={() => handleAddToCart(item)}
-                  // disabled={!item.i_availability}
+                  disabled={!item.i_availability}
                 >
                   Add to Cart
                 </button>
