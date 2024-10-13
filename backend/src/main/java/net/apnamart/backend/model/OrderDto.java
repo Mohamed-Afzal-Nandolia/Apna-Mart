@@ -21,7 +21,7 @@ public class OrderDto {
 
     private LocalDateTime orderDate;
 
-    private String orderStatus;
+    private String orderStatus; //pending, delivered, cancelled
 
     private Long totalPrice;
 

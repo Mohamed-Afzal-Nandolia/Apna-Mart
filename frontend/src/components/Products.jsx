@@ -1,57 +1,22 @@
 import { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
-import { getProductsList } from "../services/AuthService";
-
+import { getProductsList } from "../services/Apis";
 
 export const Products = () => {
   const [productList, setProductList] = useState([]);
 
   const fetchProducts = () => {
-    // await new Promise((resolve) => {setTimeout(resolve, 5000)})
-    
-    getProductsList().then((response) => {
-      console.log(response.data);
-
-      setProductList(response.data)
-
-    }).catch(error => {
-      console.error(error);
-    })
-
-  }
-
+    getProductsList()
+      .then((response) => {
+        console.log(response.data);
+        setProductList(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
-    //fetch productState
-    // setProductList([
-    //   {
-    //     i_id: 1,
-    //     i_name: "aloo",
-    //     i_price: 11,
-    //     i_image: "linktoimage",
-    //     i_quantity: 1,
-    //     i_description: "item description is here",
-    //     i_avaliability: true,
-    //   },
-    //   {
-    //     i_id: 2,
-    //     i_name: "tamatar",
-    //     i_price: 22,
-    //     i_image: "linktoimage",
-    //     i_quantity: 4,
-    //     i_description: "Aha tamatar bade mazedar!, Wah tamatar bade mazedar!",
-    //     i_avaliability: true,
-    //   },
-    //   {
-    //     i_id: 3,
-    //     i_name: "bhindi",
-    //     i_price: 33,
-    //     i_image: "linktoimage",
-    //     i_quantity: 3,
-    //     i_description: "item description is here",
-    //     i_avaliability: false,
-    //   },
-    // ]);
     fetchProducts();
   }, []);
 
@@ -89,7 +54,9 @@ export const Products = () => {
                 <Table.Cell>{product.i_image}</Table.Cell>
                 <Table.Cell>{product.i_quantity}</Table.Cell>
                 <Table.Cell>{product.i_description}</Table.Cell>
-                <Table.Cell>{product.i_avaliability === true ? "Yes" : "No"}</Table.Cell>
+                <Table.Cell>
+                  {product.i_avaliability === true ? "Yes" : "No"}
+                </Table.Cell>
                 <Table.Cell>
                   <a
                     href="#"
