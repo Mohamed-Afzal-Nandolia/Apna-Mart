@@ -23,23 +23,23 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
+
     @Autowired
     private JwtHelper jwtHelper;
-
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // bypass jwt verification for this url
+        String uri = request.getRequestURI();
+        if (uri.equals("/api/item/all-items")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
         //Authorization
-
         String requestHeader = request.getHeader("Authorization");
         //Bearer 2352345235sdfrsfgsdfsdf
         logger.info(" Header :  {}", requestHeader);
@@ -63,18 +63,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
-
             }
-
 
         } else {
             logger.info("Invalid Header Value !! ");
         }
 
-
-        //
         if (a_name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
 
             //fetch user detail from username
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(a_name);
@@ -86,16 +81,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-
             } else {
                 logger.info("Validation fails !!");
             }
 
-
         }
-
         filterChain.doFilter(request, response);
-
-
     }
 }
