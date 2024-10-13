@@ -1,10 +1,14 @@
 import { X, Plus, Minus } from "lucide-react";
 import { Button } from "flowbite-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useEffect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export const CartOverlay = ({ isOpen, onClose, cartItems, updateCartItems }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("CartOverlay cartItems:", cartItems);
+  }, [cartItems]);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.i_price * item.i_quantity,
