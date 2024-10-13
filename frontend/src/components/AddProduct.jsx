@@ -7,7 +7,7 @@ import {
   Button,
 } from "flowbite-react";
 import { useForm } from "react-hook-form";
-import { addProduct } from "../services/AuthService";
+import { addProduct } from "../services/Apis";
 
 export const AddProduct = () => {
   const { register, handleSubmit } = useForm();
@@ -16,23 +16,32 @@ export const AddProduct = () => {
     const formData = new FormData();
 
     // Convert the item object to JSON string before appending
-    formData.append("item", new Blob([JSON.stringify({
-      i_name: data.i_name,
-      i_price: data.i_price,
-      i_quantity: data.i_quantity,
-      i_description: data.i_description,
-      i_availability: data.i_availability,
-    })], { type: "application/json" }));
+    formData.append(
+      "item",
+      new Blob(
+        [
+          JSON.stringify({
+            i_name: data.i_name,
+            i_price: data.i_price,
+            i_quantity: data.i_quantity,
+            i_description: data.i_description,
+            i_availability: data.i_availability,
+          }),
+        ],
+        { type: "application/json" }
+      )
+    );
 
-    formData.append("file", data.i_file[0]);  // Ensure the file is correctly appended
+    formData.append("file", data.i_file[0]); // Ensure the file is correctly appended
 
-    addProduct(formData).then((response) => {
-      console.log(response.data);
-    }).catch(error => {
-      console.error(error);
-    });
+    addProduct(formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-
 
   return (
     <div className="w-full h-auto flex flex-col place-items-center">
