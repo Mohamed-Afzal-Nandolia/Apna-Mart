@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useAllItems } from "../hooks/useAllItems";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
@@ -7,6 +7,7 @@ import bannerImg from "../assets/groceries.jpg"
 import { useCartItems } from "../hooks/useCartItems";
 import { Loading } from "./Loading";
 import { DiscoverSection } from "../components/DiscoverSection";
+import { useRef } from "react";
 
 
 export const HomePage = () => {
@@ -14,6 +15,7 @@ export const HomePage = () => {
   const [ isCartOpen, setIsCartOpen ] = useState(false);
   const { cartItems, updateCartItems } = useCartItems();
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const discoverSectionRef = useRef(null);
 
   useEffect(() => {
     if (error) {
@@ -21,18 +23,22 @@ export const HomePage = () => {
     }
   }, [error]);
   
+  useEffect(() => {
+    setCartItemsCount(cartItems.length);
+  }, [cartItems]);
+  
   if (loading) return <Loading />;
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   }
 
-  useEffect(() => {
-    setCartItemsCount(cartItems.length);
-  }, [cartItems]);
+  const scrollToDiscover = () => {
+    discoverSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pt-16">
       <Header toggleCart={toggleCart} cartItemsCount={cartItemsCount} />
       <CartOverlay 
         isOpen={isCartOpen} 
@@ -40,8 +46,7 @@ export const HomePage = () => {
         cartItems={cartItems}
         updateCartItems={updateCartItems}
       />
-      <section className="bg-primary text-primary-foreground py-20 md:py-32">
-      
+      <section className="bg-primary text-primary-foreground py-20 md:py-32 ">
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold text-main-blue">
@@ -51,12 +56,12 @@ export const HomePage = () => {
               Discover the best local produce, meats, and pantry staples
               delivered straight to your home.
             </p>
-            <Link
-              href="#"
-              className="text-main-blue inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground px-6 text-sm font-medium text-primary shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 "
+            <button
+              onClick={scrollToDiscover}
+              className="text-main-blue inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground px-6 text-sm font-medium text-primary shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
               Shop Now
-            </Link>
+            </button>
           </div>
           <img
             src={bannerImg}
@@ -69,15 +74,8 @@ export const HomePage = () => {
         </div>
       </section>
       <main className="bg-background">
-        <section className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold tracking-tight md:text-4xl text-main-blue">
-              Discover Our Organic Grocery Selection
-            </h1>
-            <p className="mt-2 text-main-green">
-              Explore our wide range of high-quality, sustainable products.
-            </p>
-          </div>
+        <section ref={discoverSectionRef} className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
+          
           <DiscoverSection 
             allItems={allItems} 
             cartItems={cartItems} 

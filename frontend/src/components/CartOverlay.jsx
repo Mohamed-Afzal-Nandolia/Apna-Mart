@@ -1,7 +1,8 @@
 import { X, Plus, Minus } from "lucide-react";
 import { Button } from "flowbite-react";
-import { useNavigate, useEffect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 export const CartOverlay = ({ isOpen, onClose, cartItems, updateCartItems }) => {
   const navigate = useNavigate();
