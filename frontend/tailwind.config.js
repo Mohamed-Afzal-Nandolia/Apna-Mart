@@ -12,6 +12,10 @@ export default {
     extend: {
       fontFamily: {
         poppins: ["poppins"]
+      },
+      colors: {
+        "main-blue": "#2c3a8b",
+        "main-green": "#1ca32d"
       }
     },
   },
