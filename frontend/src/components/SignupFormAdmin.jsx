@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { registerAdmin, registerUser } from "../services/Apis";
+import { toast } from "react-toastify";
+import { useLocation } from 'react-router-dom';
 
 export const SignupFormAdmin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location)
 
   const {
     register,
@@ -13,8 +17,8 @@ export const SignupFormAdmin = () => {
 
   const onSubmit = async (data, page) => {
     // await new Promise((resolve) => {setTimeout(resolve, 5000)})
-
-    if (page === "admin") {
+    
+    if (location.pathname === "/admin/signup") {//page === "admin"
       registerAdmin(data)
         .then((response) => {
           console.log(response.data);
@@ -23,9 +27,12 @@ export const SignupFormAdmin = () => {
             "Bearer " + response.data.jwtToken
           );
           navigate("/admin/login");
+          toast.success("Registration Successfull!")
+          toast.success("Please login to your Account")
         })
         .catch((error) => {
           console.error(error);
+          toast.error("Email or Password is wrong!")
         });
     } else {
       registerUser(data)

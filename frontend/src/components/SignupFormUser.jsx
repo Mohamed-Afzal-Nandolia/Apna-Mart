@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/Apis";
+import { toast } from "react-toastify";
 
 export const SignupFormUser = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export const SignupFormUser = () => {
           "Bearer " + response.data.jwtToken
         );
         navigate("/user/login");
+        toast.success("Account Created Successfully!")
       })
       .catch((error) => {
         console.error(error);

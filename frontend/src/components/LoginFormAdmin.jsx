@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAdmin } from "../services/Apis";
+import { toast } from "react-toastify";
 
 export const LoginFormAdmin = () => {
   const navigate = useNavigate();
@@ -16,8 +17,10 @@ export const LoginFormAdmin = () => {
       console.log(response.data);
       localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
       navigate('/admin/dashboard')
+      toast.success("Welcome back!")
     }).catch(error => {
       console.error(error);
+      toast.error("Email or Password is wrong!")
     })
   }
 
@@ -28,12 +31,12 @@ export const LoginFormAdmin = () => {
         <h3 className="text-slate-950 text-sm sm:text-base text-center">Make a new account? <Link to="/admin/signup" className="underline pl-1">Sign Up</Link></h3>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
           <label className="font-semibold text-slate-950" htmlFor="email">Email: </label>
-          <input className="px-5 py-2 rounded-md border shadow-sm" name="email" type="email" placeholder="example@gmail.com" {...register("u_email")}/>
+          <input className="px-5 py-2 rounded-md border shadow-sm" name="email" type="email" placeholder="example@gmail.com" {...register("a_email")}/>
           {errors.email && <div className="text-red-500">{errors.email.message}</div>}
         </div>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
           <label className="font-semibold text-slate-950" htmlFor="email">Password: </label>
-          <input className="px-5 py-2 rounded-md border shadow-sm" name="password" type="password" placeholder="Password" {...register("u_pass")}/>
+          <input className="px-5 py-2 rounded-md border shadow-sm" name="password" type="password" placeholder="Password" {...register("a_pass")}/>
           {errors.password && <div className="text-red-500">{errors.password.message}</div>}
         </div>
         <button className="bg-slate-950 shadow-md text-white px-3 py-2 rounded-lg text-base hover:bg-slate-950 ease-in duration-300 hover:scale-105 mt-4" type="submit">

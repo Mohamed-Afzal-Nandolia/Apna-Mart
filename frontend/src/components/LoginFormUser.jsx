@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/Apis";
+import { toast } from "react-toastify";
 
 export const LoginFormUser = () => {
   const navigate = useNavigate();
@@ -20,9 +21,11 @@ export const LoginFormUser = () => {
           "Bearer " + response.data.jwtToken
         );
         navigate("/");
+        toast.success("Welcome back!")
       })
       .catch((error) => {
         console.error(error);
+        toast.error("Email or Password is wrong!")
       });
   };
 

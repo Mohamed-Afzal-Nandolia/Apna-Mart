@@ -8,8 +8,7 @@ import {
   HiUser,
   HiViewBoards,
 } from "react-icons/hi";
-// import reactLogo from "../assets/react.svg"
-import viteLogo from "/vite.svg";
+import Logo from "../assets/apna-mart-logo-png.png";
 import { DashboardMain } from "../components/DashboardMain";
 import { useSearchParams } from "react-router-dom";
 
@@ -20,7 +19,7 @@ export const Dashboard = () => {
   return (
     <div className="flex h-screen w-full">
       <Sidebar aria-label="" className="min-w-64">
-        <Sidebar.Logo img={viteLogo} imgAlt="Flowbite logo">
+        <Sidebar.Logo img={Logo} imgAlt="Flowbite logo">
           Apna Mart
         </Sidebar.Logo>
         <Sidebar.Items>
