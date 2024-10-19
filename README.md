@@ -72,13 +72,32 @@ http://localhost:3000
 
 ![App Screenshot](public/Open%20MySQL.png)
 
-Create a new SQL tab and type this command and run
+To get the Database you can choose 2 options
 
-`Create Database apnamart;`
+1. Create a new SQL tab and type this command and run
+   `Create Database apnamart;`
 
 On successful creation of the database it will look like this.
 
 ![App Screenshot](public/create%20db.png)
+
+OR
+
+2. You can find the db that i have already created in database/db.sql
+
+Go to server > Data Import
+
+![App Screenshot](public/Import%20.png)
+
+Select
+
+```
+Import from Self-Contained File
+Add the directory of the db
+Click on Start Import
+```
+
+![App Screenshot](public/Import%202.png)
 
 **Now that your MySQL is set, we can proceed with the backend.**
 
