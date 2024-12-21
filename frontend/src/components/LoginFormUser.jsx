@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/Apis";
 import { toast } from "react-toastify";
+import {  useState } from "react";
 
 export const LoginFormUser = () => {
   const navigate = useNavigate();
@@ -15,7 +16,10 @@ export const LoginFormUser = () => {
   const onSubmit = async (data) => {
     loginUser(data)
       .then((response) => {
-        console.log(response.data);
+        localStorage.setItem(
+          "user-email", 
+          data.u_email
+        )
         localStorage.setItem(
           "Authorization",
           "Bearer " + response.data.jwtToken

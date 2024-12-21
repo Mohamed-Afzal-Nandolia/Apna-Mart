@@ -2,6 +2,7 @@ package net.apnamart.backend.Security;
 
 import net.apnamart.backend.entity.Admin;
 import net.apnamart.backend.repository.AdminRepository;
+import net.apnamart.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +21,23 @@ public class AppConfig {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String a_name) throws UsernameNotFoundException {
                 Admin admin = adminRepository.findByA_name(a_name);
-                if (admin == null) {
-                    throw new UsernameNotFoundException("Admin not found");
+                net.apnamart.backend.entity.User user = userRepository.findByU_name(a_name);
+                if (admin == null && user == null) {
+                    throw new UsernameNotFoundException("User or Admin not found");
+                }
+                if (admin == null){
+                    return User.withUsername(user.getU_name())
+                            .password(user.getU_pass())
+                            .build();
                 }
                 return User.withUsername(admin.getA_name())
                         .password(admin.getA_pass())

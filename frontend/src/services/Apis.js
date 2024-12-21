@@ -17,4 +17,5 @@ export const loginUser = (data) => axios.post(REST_API_BASE_URL + '/auth/user/lo
 export const getProductsList = () => axios.get(REST_API_BASE_URL + '/api/item/all-items', {headers: {Authorization: localStorage.getItem("Authorization")}});
 export const addProduct = (data) => axios.post(REST_API_BASE_URL + '/api/item/create-item', data, {headers: {Authorization: localStorage.getItem("Authorization")}});
 
- 
+// sending confirmation email
+export const postEmail = (data) => axios.post(REST_API_BASE_URL + '/api/test-email', data, {headers: {Authorization: localStorage.getItem("Authorization")}});

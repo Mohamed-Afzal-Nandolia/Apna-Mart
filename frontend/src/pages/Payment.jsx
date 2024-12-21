@@ -3,6 +3,7 @@ import { Header } from "../components/Header";
 import { useCartItems } from "../hooks/useCartItems";
 import { CartOverlay } from "../components/CartOverlay";
 import { Loader2 } from "lucide-react";
+import { postEmail } from "../services/Apis";
 
 export const Payment = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -12,7 +13,37 @@ export const Payment = () => {
 
   const handlePayment = async () => {
     setLoading(true);
+    console.log(cartItems)
     try {
+
+      // Assuming cartItems contains the details of the items
+      const emailData = {
+        to: localStorage.getItem("user-email"),
+        subject: "Order Confirmation",
+        body: 
+        `
+        Thank you for your order!
+
+        Here are your order details:
+        ${"\n"}
+        ${cartItems
+          .map(
+            (item) =>
+              `- ${item.i_name} (x${item.i_quantity}): ₹${item.i_price * item.i_quantity}`
+          )
+          .join("\n")}
+        
+        Total: ₹${cartItems.reduce(
+          (total, item) => total + item.i_price * item.i_quantity,
+          0
+        )}
+      `,
+      };
+
+      // Call the backend to send the email
+      await postEmail(emailData);
+
+      // Clear the cart and show a success message
       updateCartItems([]);
       await new Promise(resolve => setTimeout(resolve, 1000));
       setPaymentSuccess(true);
