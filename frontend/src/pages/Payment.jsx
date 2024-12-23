@@ -40,8 +40,21 @@ export const Payment = () => {
       `,
       };
 
+      // console.log(localStorage.getItem("user-email")) THIS IS WORKING
+      // console.log(localStorage.getItem("Authorization"))   THIS IS WORKING
+      //console.log(getPhoneByEmail(localStorage.getItem("user-email"))); REMOVED AS OF NOW
+      
+      // const smsData = {
+      //   phoneNumber: Number,
+      //   message: emailData.body,
+      // };
+      
+
       // Call the backend to send the email
-      await postEmail(emailData);
+      await postEmail(emailData); //Not calling the email API as of now!!!! though it has no problems!!!! just uncommment it!
+
+      // Call the backend to send the email
+      //await postSms(smsData); NOT CALLING THE SMS API AS OF NOW!!!!
 
       // Clear the cart and show a success message
       updateCartItems([]);

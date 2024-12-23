@@ -34,7 +34,7 @@ public class AppConfig {
                 if (admin == null && user == null) {
                     throw new UsernameNotFoundException("User or Admin not found");
                 }
-                if (admin == null){
+                if (admin == null) {
                     return User.withUsername(user.getU_name())
                             .password(user.getU_pass())
                             .build();

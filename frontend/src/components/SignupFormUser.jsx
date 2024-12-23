@@ -61,6 +61,21 @@ export const SignupFormUser = () => {
           )}
         </div>
         <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
+          <label className="font-semibold text-slate-950" htmlFor="phone">
+            Phone Number:{" "}
+          </label>
+          <input
+            className="px-5 py-2 rounded-md border shadow-sm"
+            name="phone"
+            type="text"
+            placeholder="XXX-XXX-XXXX"
+            {...register("u_phone")}
+          />
+          {errors.phone && (
+            <div className="text-red-500">{errors.phone.message}</div>
+          )}
+        </div>
+        <div className="flex flex-col sm:gap-2 gap-1 text-sm sm:text-base">
           <label className="font-semibold text-slate-950" htmlFor="email">
             Username:{" "}
           </label>

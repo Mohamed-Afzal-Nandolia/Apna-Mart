@@ -111,6 +111,12 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!--Twilio for SMS-->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>8.8.0</version>
+		</dependency>
 
 	</dependencies>
 
