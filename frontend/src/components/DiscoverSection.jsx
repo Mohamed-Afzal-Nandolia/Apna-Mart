@@ -34,7 +34,7 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
         {allItems.map((item) => (
           <div
             key={item.i_id}
-            className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl bg-white flex flex-col justify-start"
+            className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl bg-white flex flex-col justify-between h-full"
           >
             <div className="flex justify-center p-4">
               <img
@@ -44,7 +44,7 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
                 onClick={() => navigate(`/item/${item.i_id}`)}
               />
             </div>
-            <div className="p-4">
+            <div className="p-4 flex-grow">
               <h3 
                 className="text-xl font-bold text-main-blue cursor-pointer"
                 onClick={() => navigate(`/item/${item.i_id}`)}
@@ -52,8 +52,10 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
                 {item.i_name}
               </h3>
               <p className="mt-3 mb-3 text-sm">{item.i_description}</p>
-              <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-center z-20 relative">
+            </div>
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <button
                     className="text-main-blue hover:bg-primary-foreground px-2 py-1 rounded border"
                     onClick={() => handleQuantityChange(item.i_id, -1)}
@@ -70,6 +72,11 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
                     +
                   </button>
                 </div>
+                <div className="flex items-center justify-start flex-grow">
+                  <span className="mx-2 text-main-blue">
+                    Price: ₹{item.i_price}
+                  </span>
+                </div>
                 <button
                   className="border bg-main-green text-white bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary z-20 relative"
                   onClick={() => handleAddToCart(item)}
@@ -84,7 +91,7 @@ export const DiscoverSection = ({ allItems, cartItems, updateCartItems }) => {
       </div>
     </>
   );
-};
+}
 
 DiscoverSection.propTypes = {
   allItems: PropTypes.array.isRequired,

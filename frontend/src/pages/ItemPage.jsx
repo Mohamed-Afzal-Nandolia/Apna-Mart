@@ -69,7 +69,7 @@ export const ItemPage = () => {
             <p className="mt-4 text-lg text-gray-700">{item.i_description}</p>
             <div className="mt-6">
               <h2 className="text-xl font-semibold text-main-green">Price</h2>
-              <p className="text-2xl font-bold">${item.i_price.toFixed(2)}</p>
+              <p className="text-2xl font-bold">₹{item.i_price.toFixed(2)}</p>
             </div>
             <div className="mt-6">
               <h2 className="text-xl font-semibold text-main-green">
