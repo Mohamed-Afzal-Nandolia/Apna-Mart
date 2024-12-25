@@ -1,6 +1,7 @@
 package net.apnamart.backend.Security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -68,6 +69,18 @@ public class JwtHelper {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public Boolean validateToken(String token) {
+        try {
+            // Extract the username from the token
+            String username = getUsernameFromToken(token);
+
+            // Check if the token is expired
+            return !isTokenExpired(token);
+        } catch (Exception e) {
+            return false;  // If any exception occurs, treat it as invalid
+        }
     }
 
 

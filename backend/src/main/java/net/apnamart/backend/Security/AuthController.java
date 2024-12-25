@@ -39,7 +39,7 @@ public class AuthController {
     private AuthenticationManager manager;
 
     @Autowired
-    private JwtHelper helper;
+    private JwtHelper jwtHelper;
 
     @Autowired
     private AppConfig appConfig;
@@ -67,7 +67,7 @@ public class AuthController {
             new InMemoryUserDetailsManager(user);
 
             // Generate JWT token
-            String token = this.helper.generateToken(user);
+            String token = this.jwtHelper.generateToken(user);
 
             // Create a JwtResponse object with the name and token
             JwtResponse response = JwtResponse.builder()
@@ -148,7 +148,7 @@ public class AuthController {
                     .build();
 
             // Generate JWT token
-            String token = this.helper.generateToken(userDetails);
+            String token = this.jwtHelper.generateToken(userDetails);
 
             // Create a JwtResponse object with the name and token
             JwtResponse response = JwtResponse.builder()
@@ -182,5 +182,27 @@ public class AuthController {
     public String getLoggedInUser() {
         return "HELLO";
     }
+
+    @GetMapping("/validate-token")
+    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String token) {
+        try {
+            // Remove "Bearer " prefix if it exists
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7); // Get the token part
+            }
+
+            // Validate the token using the simplified method
+            boolean isValid = this.jwtHelper.validateToken(token);
+
+            if (isValid) {
+                return ResponseEntity.ok("Token is valid");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+    }
+
 
 }

@@ -8,6 +8,7 @@ import { useCartItems } from "../hooks/useCartItems";
 import { Loading } from "./Loading";
 import { DiscoverSection } from "../components/DiscoverSection";
 import { useRef } from "react";
+import { validateToken } from "../services/Apis";
 
 
 export const HomePage = () => {
@@ -15,6 +16,8 @@ export const HomePage = () => {
   const [ isCartOpen, setIsCartOpen ] = useState(false);
   const { cartItems, updateCartItems } = useCartItems();
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [hasToken, setHasToken] = useState(true);
+  const [tokenValid, setTokenValid] = useState(false);
   const discoverSectionRef = useRef(null);
 
   useEffect(() => {
@@ -26,11 +29,53 @@ export const HomePage = () => {
   useEffect(() => {
     setCartItemsCount(cartItems.length);
   }, [cartItems]);
-  
+
+  useEffect(() => {
+    const checkToken = async () => {
+        try {
+          const response = await validateToken();
+          console.log("Call has been done and ", response.data);
+          setHasToken(true); // Token is present
+          setTokenValid(true); // Token is valid
+        } catch (error) {
+          console.error("Call has been done and ", error.response?.data);
+          setTokenValid(false); // Token is invalid
+        }
+    };
+
+    const token = localStorage.getItem("Authorization");
+    if (token) {
+        checkToken(); // Validate the token if it exists
+    } else {
+        setHasToken(false); // No token found
+        //console.log("TOKEN IS INVALID");
+    }
+  }, []);
+ 
   if (loading) return <Loading />;
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  }
+
+  if (tokenValid === false && hasToken === true) {
+    return (
+      <div className="flex flex-col pt-16">
+        <Header toggleCart={toggleCart} cartItemsCount={cartItemsCount} />
+        <CartOverlay
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cartItems}
+          updateCartItems={updateCartItems}
+        />
+        <div className="container mx-auto px-4 py-12">
+          <p className="text-center text-red-500">
+            Your session has expired or the token is invalid. Please try logging in again.
+          </p>
+          {/* Optionally, redirect or show a login button here */}
+        </div>
+      </div>
+    );
   }
 
   const scrollToDiscover = () => {

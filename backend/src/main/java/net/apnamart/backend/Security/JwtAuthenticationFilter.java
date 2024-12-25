@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // bypass jwt verification for this url
         String uri = request.getRequestURI();
-        if (uri.equals("/api/item/all-items")) {
+        if (uri.equals("/") || uri.equals("/api/item/all-items")) {
             filterChain.doFilter(request, response);
             return;
         }

@@ -26,3 +26,14 @@ export const postSms = (data) => axios.post(REST_API_BASE_URL + '/api/sms/send',
 // get phone by email
 // export const getPhoneByEmail = (data) => axios.post(REST_API_BASE_URL + '/api/user/user-phone/send', data, {headers: {Authorization: localStorage.getItem("Authorization")}});
 // YE CALL NAHI HORA HAI // NIKAL DIYA
+
+export const validateToken = () => axios.get(REST_API_BASE_URL + '/auth/validate-token', {headers: {Authorization: localStorage.getItem("Authorization")}});
+
+// export const validateToken = () => {
+//     const token = localStorage.getItem("Authorization");
+//     return axios.get(REST_API_BASE_URL + '/auth/validate-token', {
+//         headers: {
+//             Authorization: `${token}`,
+//         },
+//     });
+// };
