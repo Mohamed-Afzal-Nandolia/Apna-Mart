@@ -8,9 +8,11 @@ import {
 } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { addProduct } from "../services/Apis";
+import { toast } from "react-toastify"; // Import toast from react-toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 export const AddProduct = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm(); // Add reset method
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -34,13 +36,15 @@ export const AddProduct = () => {
 
     formData.append("file", data.i_file[0]); // Ensure the file is correctly appended
 
-    addProduct(formData)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try {
+      const response = await addProduct(formData);
+      console.log(response.data);
+      toast.success("Product added successfully!"); // Display success toast
+      reset(); // Reset the form fields after success
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add product. Please try again."); // Display error toast
+    }
   };
 
   return (
@@ -101,7 +105,7 @@ export const AddProduct = () => {
           className="flex max-w-md gap-4"
           {...register("i_availability")}
         >
-          <legend className="mb-4">Availablity</legend>
+          <legend className="mb-4">Availability</legend>
           <div className="flex items-center gap-2">
             <Radio id="yesOption" name="options" value={true} defaultChecked />
             <Label htmlFor="yesOption">Yes</Label>

@@ -19,7 +19,7 @@ export const Header = ({ toggleCart, cartItemsCount }) => {
         onClick={() => navigate("/")}
       />
       <div className="flex items-center gap-8">
-        {!loggedIn && (
+        {/* {!loggedIn && (
           <Button
             color="light"
             className="text-sm py-0 rounded-md text-main-blue"
@@ -40,7 +40,7 @@ export const Header = ({ toggleCart, cartItemsCount }) => {
           >
             Logout
           </Button>
-        )}
+        )} */}
         <div className="relative">
           <ShoppingCart
             color="indigo"

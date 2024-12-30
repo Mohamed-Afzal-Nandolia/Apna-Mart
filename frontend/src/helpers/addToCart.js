@@ -15,5 +15,10 @@ export const addToCart = (item, quantity, cartItems, updateCartItems) => {
   } else {
     updateCartItems([...cartItems, { ...item, i_quantity: quantity }]);
   }
-  toast.success(`Added ${quantity} to cart`);
+  toast.success(`Added ${quantity} to cart`,{
+    position: "bottom-right",
+    pauseOnHover: false,
+    autoClose: 1500,
+    limit: 3,
+  });
 };

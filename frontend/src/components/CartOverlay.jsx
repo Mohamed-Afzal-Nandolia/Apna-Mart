@@ -43,7 +43,7 @@ export const CartOverlay = ({ isOpen, onClose, cartItems, updateCartItems }) => 
           <h2 className="text-lg font-bold text-main-green">Your Cart</h2>
           <X onClick={onClose} className="cursor-pointer" />
         </div>
-        <div className="flex-grow p-4 border-t">
+        <div className="flex-grow p-4 border-t overflow-y-auto max-h-[calc(100vh-200px)]"> {/* Added scroll and height control */}
           {cartItems.map((item) => (
             <div
               key={item.i_id}
@@ -99,7 +99,9 @@ export const CartOverlay = ({ isOpen, onClose, cartItems, updateCartItems }) => 
               Proceed to Checkout
             </Button>
           </div>
-        ) : (<div className="w-full text-center py-4"> Add items to cart! </div>)}
+        ) : (
+          <div className="w-full text-center py-4"> Add items to cart! </div>
+        )}
       </div>
     </div>
   );
