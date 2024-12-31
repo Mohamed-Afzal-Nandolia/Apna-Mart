@@ -2,9 +2,18 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAdmin } from "../services/Apis";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 export const LoginFormAdmin = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("Authorization");
+    if (token) {
+      // If the user is already logged in, redirect to the dashboard
+      navigate("/admin/dashboard", { replace: true });
+    }
+  }, [navigate]);  
 
   const {
     register,
@@ -13,16 +22,28 @@ export const LoginFormAdmin = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    loginAdmin(data).then((response) => {
-      console.log(response.data);
-      localStorage.setItem("Authorization", "Bearer " + response.data.jwtToken);
-      navigate('/admin/dashboard')
-      toast.success("Welcome back!")
-    }).catch(error => {
+    loginAdmin(data)
+    .then((response) => {
+      localStorage.setItem(
+        "admin-email", 
+        data.a_email
+      )
+      localStorage.setItem(
+        "Authorization",
+        "Bearer " + response.data.jwtToken
+      );
+      navigate("/admin/dashboard");
+      toast.success("Welcome back!",{
+        pauseOnHover: false,
+        autoClose: 1500,
+      })
+    })
+    .catch((error) => {
       console.error(error);
       toast.error("Email or Password is wrong!")
-    })
-  }
+    });  
+  };
+  
 
   return (
     <form className="h-screen w-screen flex flex-col justify-center place-items-center" onSubmit={handleSubmit(onSubmit)}>
