@@ -22,6 +22,7 @@ export const LoginFormAdmin = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log("Form data:", data);  
     loginAdmin(data)
     .then((response) => {
       localStorage.setItem(
@@ -41,7 +42,7 @@ export const LoginFormAdmin = () => {
     .catch((error) => {
       console.error(error);
       toast.error("Email or Password is wrong!")
-    });  
+    });
   };
   
 

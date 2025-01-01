@@ -1,13 +1,10 @@
 package net.apnamart.backend.controller;
 
 import lombok.AllArgsConstructor;
+import net.apnamart.backend.exception.AmountExceedsIntegerValueException;
 import net.apnamart.backend.model.AdminDto;
 import net.apnamart.backend.service.AdminService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,6 +43,41 @@ public class AdminController {
     public ResponseEntity<List<AdminDto>> getAllAdmin(){
         List<AdminDto> allAdmin = adminService.getAllAdmin();
         return ResponseEntity.ok(allAdmin);
+    }
+
+    @GetMapping("/admin/details")
+    public ResponseEntity<AdminDto> getAdminByEmail(@RequestParam("email") String email) {
+        AdminDto adminDto = adminService.getAdminByEmail(email);
+        return ResponseEntity.ok(adminDto);
+    }
+
+
+    @GetMapping("/amount/{id}")
+    public ResponseEntity<Integer> getAmount(@PathVariable("id") Long id){
+        Integer amount = adminService.getAmount(id);
+        return ResponseEntity.ok(amount);
+    }
+
+    @PutMapping("/amount/update/{id}")
+    public ResponseEntity<AdminDto> updateAmount(@PathVariable("id") Long id, @RequestBody String amount){
+        try {
+            Integer parsedAmount = Integer.parseInt(amount);
+            AdminDto adminDto = adminService.updateAmount(id, parsedAmount);
+            return ResponseEntity.ok(adminDto);
+        } catch (NumberFormatException e) {
+            throw new AmountExceedsIntegerValueException("The amount exceeds the integer allowable value");
+        }
+    }
+
+    @PostMapping("/amount/create/{id}")
+    public ResponseEntity<AdminDto> createAmount(@PathVariable Long id, @RequestBody String amount) {
+        try {
+            Integer parsedAmount = Integer.parseInt(amount);
+            AdminDto adminDto = adminService.createAmount(id, parsedAmount);
+            return ResponseEntity.ok(adminDto);
+        } catch (NumberFormatException e) {
+            throw new AmountExceedsIntegerValueException("The amount exceeds the integer allowable value");
+        }
     }
 
 }

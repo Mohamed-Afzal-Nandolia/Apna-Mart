@@ -18,4 +18,12 @@ public interface AdminService {
 
     public Boolean loginIn(AdminDto dto);
 
+    public Integer getAmount(Long id);
+
+    public AdminDto updateAmount(Long id, Integer amount);
+
+    public AdminDto createAmount(Long id, Integer amount);
+
+    public AdminDto getAdminByEmail(String email);
+
 }

@@ -28,4 +28,7 @@ public class Admin {
     @Column(name = "a_pass")
     private String a_pass;
 
+    @Column(name = "a_amount")
+    private Integer amount;
+
 }

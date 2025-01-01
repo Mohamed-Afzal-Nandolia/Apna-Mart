@@ -79,4 +79,39 @@ public class AdminServiceImpl implements AdminService {
         return false;
     }
 
+    @Override
+    public Integer getAmount(Long id) {
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin Does not exists with id: " + id));
+        return admin.getAmount();
+    }
+
+    @Override
+    public AdminDto updateAmount(Long id, Integer amount) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin Does not exists with id: " + id));
+        admin.setAmount(amount);
+        Admin updatedAdmin = adminRepository.save(admin);
+        return modelMapper.map(updatedAdmin, AdminDto.class);
+    }
+
+    @Override
+    public AdminDto createAmount(Long id, Integer amount) {
+        ModelMapper modelMapper = new ModelMapper();
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin Does not exists with id: " + id));
+        admin.setAmount(amount);
+        Admin updatedAdmin = adminRepository.save(admin);
+        return modelMapper.map(updatedAdmin, AdminDto.class);
+    }
+
+    @Override
+    public AdminDto getAdminByEmail(String email) {
+        ModelMapper modelMapper = new ModelMapper();
+        Admin admin = adminRepository.findByEmail(email);
+        if(admin != null){
+            return modelMapper.map(admin, AdminDto.class);
+        }
+        return new AdminDto();
+    }
+
 }

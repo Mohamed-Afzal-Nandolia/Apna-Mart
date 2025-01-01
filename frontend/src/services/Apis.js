@@ -37,3 +37,35 @@ export const validateToken = () => axios.get(REST_API_BASE_URL + '/auth/validate
 //         },
 //     });
 // };
+
+export const getAmount = (adminId) => 
+    axios.get(REST_API_BASE_URL + '/api/amount/' + adminId, {
+        headers: {
+          Authorization: localStorage.getItem("Authorization"),
+        },
+      }
+    );
+
+
+export const updateAmount = (id, amount) => {
+    return axios.put(
+        `${REST_API_BASE_URL}/api/amount/update/${id}`,
+        amount.toString(), // Convert the amount to a string
+        {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("Authorization"),
+        },
+        }
+    );
+};
+  
+export const getAdminByEmail = (email) => {
+    return axios.get(`${REST_API_BASE_URL}/api/admin/details?email=${email}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("Authorization"), // Ensure the token is sent in the header
+      },
+    });
+  };
+  

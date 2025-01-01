@@ -1,5 +1,6 @@
 package net.apnamart.backend.model;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,6 @@ public class AdminDto {
     private String a_email;
 
     private String a_pass;
+    
+    private Integer amount;
 }
