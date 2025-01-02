@@ -11,14 +11,16 @@ export const Payment = () => {
   const { cartItems, updateCartItems } = useCartItems();
   const [loading, setLoading] = useState(false);
   const userdata = JSON.parse(localStorage.getItem("shippingDetails"));
+  let adminEmail = "m45474516@gmail.com";
+  let adminPhone = "8879438860";
 
   const handlePayment = async () => {
     setLoading(true);
     console.log(cartItems)
     try {
 
-      // Assuming cartItems contains the details of the items
-      const emailData = {
+      // User's Email Data that will be forwared to the user
+      const userEmailData = {
         to: userdata.email,
         subject: "Order Confirmation",
         body: 
@@ -45,21 +47,55 @@ export const Payment = () => {
       `,
       };
 
-      // console.log(localStorage.getItem("user-email")) THIS IS WORKING
-      // console.log(localStorage.getItem("Authorization"))   THIS IS WORKING
-      //console.log(getPhoneByEmail(localStorage.getItem("user-email"))); REMOVED AS OF NOW
-      
-      const smsData = {
-        phoneNumber: "+91" + userdata.phone,
-        message: emailData.body,
+      // Admin's Email Data that will be forwared to the admin
+      const adminEmailData = {
+        to: adminEmail,
+        subject: "Order Confirmation",
+        body: 
+        `
+        An Order has been placed by ${userdata.name}!
+        ${"\n"}
+        Email: ${userdata.email}, Phone: ${userdata.phone}
+        
+        Here are your order details:
+        ${"\n"}
+        ${cartItems
+          .map(
+            (item) =>
+              `- ${item.i_name} (x${item.i_quantity}): ₹${item.i_price * item.i_quantity}`
+          )
+          .join("\n")}
+        
+        Total: ₹${cartItems.reduce(
+          (total, item) => total + item.i_price * item.i_quantity,
+          0
+        )}
+
+        Shipping addres is as follows:
+        ${"\n"}
+        ${userdata.address}
+      `,
       };
       
+      // User's SMS Data that will be forwared to the user
+      const userSmsData = {
+        phoneNumber: "+91" + userdata.phone,
+        message: userEmailData.body,
+      };
 
-      // Call the backend to send the email
-      await postEmail(emailData); //Not calling the email API as of now!!!! though it has no problems!!!! just uncommment it!
+      // Admin's SMS Data that will be forwared to the admin
+      const adminSmsData = {
+        phoneNumber: "+91" + adminPhone,
+        message: adminEmailData.body,
+      };
+      
+      // Calling the email and sms API for the User
+      await postEmail(userEmailData); 
+      await postSms(userSmsData); 
 
-      // Call the backend to send the email
-      await postSms(smsData); //NOT CALLING THE SMS API AS OF NOW!!!!
+      // Calling the email and sms API for the Admin
+      await postEmail(adminEmailData); 
+      await postSms(adminSmsData); 
 
       // Clear the cart and show a success message
       updateCartItems([]);

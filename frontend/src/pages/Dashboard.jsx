@@ -4,6 +4,7 @@ import {
   HiChartPie,
   HiInbox,
   HiShoppingBag,
+  HiClipboardList,
   HiTable,
   HiUser,
   HiViewBoards,
@@ -187,6 +188,18 @@ export const Dashboard = () => {
             >
               Minimum Order
             </Sidebar.Item>
+            {/* <Sidebar.Item
+              icon={HiClipboardList}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setSearchParams((prev) => {
+                  prev.set("tab", "all-orders");
+                  return prev;
+                });
+              }}
+            >
+              All Orders
+            </Sidebar.Item> */}
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>

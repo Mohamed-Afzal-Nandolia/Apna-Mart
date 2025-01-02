@@ -2,6 +2,7 @@ import propTypes from "prop-types"
 import { Products } from "./Products"
 import { AddProduct } from "./AddProduct"
 import { SetMinimumOrder } from "./SetMinimumOrder"
+import { AllOrders } from "./AllOrders"
 
 export const DashboardMain = ({searchParams}) => {
   {
@@ -17,6 +18,11 @@ export const DashboardMain = ({searchParams}) => {
     else if(searchParams === "set-minimum-order"){
       return (
         <SetMinimumOrder />
+      )
+    }
+    else if(searchParams === "all-orders"){
+      return (
+        <AllOrders />
       )
     }
   }
