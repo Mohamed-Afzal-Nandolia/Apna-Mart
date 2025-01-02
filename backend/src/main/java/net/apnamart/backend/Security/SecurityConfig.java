@@ -25,8 +25,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .requestMatchers("/test").authenticated()
-                .requestMatchers("/api/test-email","/api/user/*","/auth/*", "/auth/admin/*", "/auth/user/*", "/api/item/all-items", "/images/*", "/api/item/*").permitAll() // dont need authentication
-                //auth/login infuture should be use to directly login without explicitly login via credentials
+                .requestMatchers("/api/sms/send", "/api/amount/*", "/api/test-email","/api/user/*","/auth/*", "/auth/admin/*", "/auth/user/*", "/api/item/all-items", "/images/*", "/api/item/*").permitAll() // dont need authentication
+                //auth/login in future should be use to directly login without explicitly login via credentials
                 .anyRequest().authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

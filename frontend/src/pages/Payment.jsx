@@ -3,13 +3,14 @@ import { Header } from "../components/Header";
 import { useCartItems } from "../hooks/useCartItems";
 import { CartOverlay } from "../components/CartOverlay";
 import { Loader2 } from "lucide-react";
-import { postEmail } from "../services/Apis";
+import { postEmail, postSms } from "../services/Apis";
 
 export const Payment = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { cartItems, updateCartItems } = useCartItems();
   const [loading, setLoading] = useState(false);
+  const userdata = JSON.parse(localStorage.getItem("shippingDetails"));
 
   const handlePayment = async () => {
     setLoading(true);
@@ -18,7 +19,7 @@ export const Payment = () => {
 
       // Assuming cartItems contains the details of the items
       const emailData = {
-        to: localStorage.getItem("user-email"),
+        to: userdata.email,
         subject: "Order Confirmation",
         body: 
         `
@@ -37,6 +38,10 @@ export const Payment = () => {
           (total, item) => total + item.i_price * item.i_quantity,
           0
         )}
+
+        Your order will be delivered to:
+        ${"\n"}
+        ${userdata.address}
       `,
       };
 
@@ -44,17 +49,17 @@ export const Payment = () => {
       // console.log(localStorage.getItem("Authorization"))   THIS IS WORKING
       //console.log(getPhoneByEmail(localStorage.getItem("user-email"))); REMOVED AS OF NOW
       
-      // const smsData = {
-      //   phoneNumber: Number,
-      //   message: emailData.body,
-      // };
+      const smsData = {
+        phoneNumber: "+91" + userdata.phone,
+        message: emailData.body,
+      };
       
 
       // Call the backend to send the email
       await postEmail(emailData); //Not calling the email API as of now!!!! though it has no problems!!!! just uncommment it!
 
       // Call the backend to send the email
-      //await postSms(smsData); NOT CALLING THE SMS API AS OF NOW!!!!
+      await postSms(smsData); //NOT CALLING THE SMS API AS OF NOW!!!!
 
       // Clear the cart and show a success message
       updateCartItems([]);
@@ -85,7 +90,7 @@ export const Payment = () => {
           onClick={handlePayment}
           disabled={loading || paymentSuccess}
         >
-          {loading ? <Loader2 className="animate-spin" /> : paymentSuccess ? "Payment Successful" : "PAY"}
+          {loading ? <Loader2 className="animate-spin" /> : paymentSuccess ? "Payment Successful" : "Click to Confirm Your Order"}
         </button>
       </div>
     </>

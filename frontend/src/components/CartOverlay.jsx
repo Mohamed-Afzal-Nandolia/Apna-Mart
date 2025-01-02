@@ -7,9 +7,9 @@ import { useEffect } from "react";
 export const CartOverlay = ({ isOpen, onClose, cartItems, updateCartItems }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("CartOverlay cartItems:", cartItems);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   console.log("CartOverlay cartItems:", cartItems);
+  // }, [cartItems]);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.i_price * item.i_quantity,

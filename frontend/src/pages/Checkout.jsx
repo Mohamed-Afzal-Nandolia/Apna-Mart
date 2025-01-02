@@ -3,28 +3,61 @@ import { useNavigate } from "react-router-dom";
 import { useCartItems } from "../hooks/useCartItems";
 import { Header } from "../components/Header";
 import { Loading } from "./Loading";
+import { getAmount } from "../services/Apis";
+import { toast, ToastContainer } from 'react-toastify';
 
 export const Checkout = () => {
   const navigate = useNavigate();
   const { cartItems, updateCartItems } = useCartItems();
   const [isLoading, setIsLoading] = useState(true);
+  const [minOrderAmount, setMinOrderAmount] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     address: "",
     city: "",
     zipCode: "",
   });
 
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.i_price * item.i_quantity,
+    0
+  );
+
+  // Check if all fields are filled
+  const isFormValid =
+    minOrderAmount !== null && // Ensure minOrderAmount is fetched
+      Object.values(formData).every((value) => value.trim() !== "") &&
+        formData.phone.length === 10 &&
+          totalPrice >= minOrderAmount;
+
+    
   useEffect(() => {
     // Simulate loading delay
     setTimeout(() => setIsLoading(false), 500);
   }, []);
 
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.i_price * item.i_quantity,
-    0
-  );
+  useEffect(() => {
+    const fetchMinOrderAmount = async () => {
+      try {
+        const adminId = 8; // HARD CODED ADMIN ID
+        const response = await getAmount(adminId);
+        setMinOrderAmount(response.data); // Assuming the response contains `amount`
+
+        if(totalPrice < response.data){
+          toast.error(`Minimum order amount should be ₹${response.data}`);
+        }
+        
+      } catch (error) {
+        console.error("Failed to fetch minimum order amount:", error);
+        setMinOrderAmount(0); // Fallback to a safe value in case of error
+      }
+    };
+  
+    fetchMinOrderAmount();
+  }, []);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,18 +66,22 @@ export const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isFormValid) return;
+
+    // Save form data to localStorage or a global state
+    localStorage.setItem("shippingDetails", JSON.stringify(formData));
+
     // Here you would typically process the payment and order
     console.log("Order submitted:", { formData, cartItems, totalPrice });
-    // Clear cart and redirect to a confirmation page
-    updateCartItems([]);
-    navigate("/order-confirmation");
+
+    navigate("/payment");
   };
 
   if (isLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header cartItemsCount={cartItems.length}/>
+    <div className="flex flex-col min-h-screen pt-20">
+      <Header cartItemsCount={cartItems.length} />
       <main className="flex-grow bg-background">
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-main-blue mb-8">Checkout</h1>
@@ -53,7 +90,9 @@ export const Checkout = () => {
               <h2 className="text-xl font-semibold text-main-green mb-4">Order Summary</h2>
               {cartItems.map((item) => (
                 <div key={item.i_id} className="flex justify-between items-center mb-2">
-                  <span>{item.i_name} x {item.i_quantity}</span>
+                  <span>
+                    {item.i_name} x {item.i_quantity}
+                  </span>
                   <span>₹{(item.i_price * item.i_quantity).toFixed(2)}</span>
                 </div>
               ))}
@@ -74,6 +113,15 @@ export const Checkout = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Full Name"
+                    required
+                    className="w-full p-2 border rounded"
+                  />
+                  <input
+                    type="number"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="Phone Number (10 digits)"
                     required
                     className="w-full p-2 border rounded"
                   />
@@ -118,8 +166,10 @@ export const Checkout = () => {
                 </div>
                 <button
                   type="submit"
-                  className="mt-6 w-full bg-main-green text-white py-2 px-4 rounded hover:bg-main-green/90 transition-colors"
-                  onClick={() => navigate("/payment")}
+                  className={`mt-6 w-full bg-main-green text-white py-2 px-4 rounded hover:bg-main-green/90 transition-colors ${
+                    isFormValid ? "" : "opacity-50 cursor-not-allowed"
+                  }`}
+                  disabled={!isFormValid}
                 >
                   Place Order
                 </button>
