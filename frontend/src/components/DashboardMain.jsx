@@ -2,9 +2,10 @@ import propTypes from "prop-types"
 import { Products } from "./Products"
 import { AddProduct } from "./AddProduct"
 import { SetMinimumOrder } from "./SetMinimumOrder"
-import { AllOrders } from "./AllOrders"
 import { CreateCategory } from "./CreateCategory"
 import { CreateSubCategory } from "./CreateSubCategory"
+import { AllCategories } from "./AllCategories"
+import { DeleteCategory } from "./DeleteCategory"
 
 export const DashboardMain = ({searchParams}) => {
   {
@@ -30,6 +31,16 @@ export const DashboardMain = ({searchParams}) => {
     else if(searchParams === "create-sub-category"){
       return (
         <CreateSubCategory/>
+      )
+    }
+    else if(searchParams === "all-category"){
+      return (
+        <AllCategories/>
+      )
+    }
+    else if(searchParams === "delete-category"){
+      return (
+        <DeleteCategory/>
       )
     }
   }

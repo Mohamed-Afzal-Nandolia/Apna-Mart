@@ -1,0 +1,20 @@
+Errors:
+
+1. Response to preflight request
+
+Access to XMLHttpRequest at 'http://localhost:8085/category' from origin 'http://localhost:3000'
+has been blocked by CORS policy: Response to preflight request doesn't pass access control
+check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+From the front end,
+
+  export const getAllCategories = () => {
+    return axios.get(REST_API_BASE_URL + "/category", {headers: {Authorization: localStorage.getItem("Authorization")}});
+  };
+
+To solve this type of error, just add '/' at the end of the request.
+
+  export const getAllCategories = () => {
+    return axios.get(REST_API_BASE_URL + "/category/", {headers: {Authorization: localStorage.getItem("Authorization")}});
+  };
+

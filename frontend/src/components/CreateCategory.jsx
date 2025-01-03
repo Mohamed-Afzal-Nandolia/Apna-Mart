@@ -35,7 +35,7 @@ export const CreateCategory = () => {
   return (
     <div className="w-full h-auto flex flex-col place-items-center mt-16 mb-8">
       <div className="bg-white shadow-md rounded-lg p-8 w-96">
-        <h1 className="text-2xl font-bold text-center mb-6">Create Category</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">Add Category</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col">
             <label htmlFor="categoryName" className="font-semibold">

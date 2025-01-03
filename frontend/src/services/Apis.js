@@ -77,3 +77,25 @@ export const getAdminByEmail = (email) => {
     );
   };
   
+  export const getAllCategories = () => {
+    return axios.get(REST_API_BASE_URL + "/category/", {headers: {Authorization: localStorage.getItem("Authorization")}});
+  };
+  
+  export const createSubCategory = (categoryId, subCategoryName) => {
+    return axios.post(REST_API_BASE_URL + "/category/sub-category/" + categoryId,
+      {sc_name: subCategoryName},
+      {
+        headers: {
+            "Content-Type": "application/json",  // Ensure this header is set to application/json
+            Authorization: localStorage.getItem("Authorization"), // Ensure the token is sent in the header
+        },
+      },
+    );
+  };
+
+  // Delete a category by ID
+  export const deleteCategory = (categoryId) => {
+    return axios.delete(`${REST_API_BASE_URL}/category/${categoryId}`, {
+      headers: { Authorization: localStorage.getItem("Authorization") },
+    });
+  };

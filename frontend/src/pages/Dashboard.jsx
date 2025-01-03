@@ -15,6 +15,7 @@ import {
   HiAdjustments,
   HiServer,
   HiPlusSm,
+  HiOutlineDocumentRemove,
 } from "react-icons/hi";
 import Logo from "../assets/apna-mart-logo-png.png";
 import { DashboardMain } from "../components/DashboardMain";
@@ -196,10 +197,10 @@ export const Dashboard = () => {
                   });
                 }}
               >
-                Create Category
+                Add Category
               </Sidebar.Item>
               <Sidebar.Item
-                icon={HiPlusSm}
+                icon={HiViewBoards}
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   setSearchParams((prev) => {
@@ -208,7 +209,31 @@ export const Dashboard = () => {
                   });
                 }}
               >
-                Create Sub Category
+                Add Sub Category
+              </Sidebar.Item>
+              <Sidebar.Item
+                icon={HiTable}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    prev.set("tab", "all-category");
+                    return prev;
+                  });
+                }}
+              >
+                All Categories
+              </Sidebar.Item>
+              <Sidebar.Item
+                icon={HiOutlineDocumentRemove}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    prev.set("tab", "delete-category");
+                    return prev;
+                  });
+                }}
+              >
+                Delete Category
               </Sidebar.Item>
             </Sidebar.Collapse>
             {/* <Sidebar.Item
