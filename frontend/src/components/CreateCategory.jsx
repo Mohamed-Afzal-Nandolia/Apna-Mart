@@ -12,16 +12,7 @@ export const CreateCategory = () => {
     setIsLoading(true);
 
     try {
-      const adminId = localStorage.getItem("admin-id");
-      if (!adminId) {
-        toast.error("Admin ID not found. Please log in again.", {
-          pauseOnHover: false,
-          autoClose: 1500,
-        });
-        return;
-      }
-
-      const response = await createCategory(adminId, categoryName);
+      const response = await createCategory(categoryName);
       console.log("Category created successfully:", response.data);
       toast.success("Category added successfully!", {
         pauseOnHover: false,

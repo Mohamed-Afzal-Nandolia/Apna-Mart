@@ -25,8 +25,9 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .requestMatchers("/test").authenticated()
-                .requestMatchers("/category/*","/api/sms/send", "/api/amount/*", "/api/test-email",
-                        "/api/user/*","/auth/*", "/auth/admin/*", "/auth/user/*", "/api/item/all-items",
+                .requestMatchers("/api/sms/send", //"/category/*","/category/sub-category/*",
+                        "/api/amount/*", "/api/test-email","/api/user/*","/auth/*",
+                        "/auth/admin/*", "/auth/user/*", "/api/item/all-items",
                         "/images/*", "/api/item/*").permitAll() // dont need authentication
                 //auth/login in future should be use to directly login without explicitly login via credentials
                 .anyRequest().authenticated()

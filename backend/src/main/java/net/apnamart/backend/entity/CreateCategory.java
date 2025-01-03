@@ -3,6 +3,9 @@ package net.apnamart.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,7 +22,6 @@ public class CreateCategory {
     @Column(name = "c_name")
     private String c_name;
 
-    @Column(name = "c_s_name")
-    private String c_s_name;
-
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubCategory> subCategories = new ArrayList<>();
 }

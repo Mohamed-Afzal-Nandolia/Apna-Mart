@@ -1,12 +1,11 @@
 package net.apnamart.backend.service.Impl;
 
 import lombok.AllArgsConstructor;
-import net.apnamart.backend.entity.Admin;
 import net.apnamart.backend.entity.CreateCategory;
-import net.apnamart.backend.entity.User;
-import net.apnamart.backend.model.AdminDto;
+import net.apnamart.backend.entity.SubCategory;
+import net.apnamart.backend.exception.ResourceNotFoundException;
 import net.apnamart.backend.model.CreateCategoryDto;
-import net.apnamart.backend.model.UserDto;
+import net.apnamart.backend.model.SubCategoryDto;
 import net.apnamart.backend.repository.CreateCategoryRepository;
 import net.apnamart.backend.service.CreateCategoryService;
 import org.modelmapper.ModelMapper;
@@ -39,4 +38,30 @@ public class CreateCategoryImpl implements CreateCategoryService {
     public CreateCategoryDto addSubCategory(CreateCategoryDto createCategoryDto) {
         return null;
     }
+
+    @Override
+    public SubCategoryDto addSubCategory(Long categoryId, SubCategoryDto subCategoryDto) {
+        CreateCategory category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+
+        SubCategory subCategory = SubCategory.builder()
+                .sc_name(subCategoryDto.getSc_name())
+                .category(category)
+                .build();
+
+        category.getSubCategories().add(subCategory);
+        categoryRepository.save(category);
+
+        return SubCategoryDto.builder()
+                .sc_id(subCategory.getSc_id())
+                .sc_name(subCategory.getSc_name())
+                .build();
+    }
+
+    @Override
+    public void deleteCategory(Long categoryId) {
+        CreateCategory category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
+        categoryRepository.deleteById(categoryId);
+    }
+
 }
