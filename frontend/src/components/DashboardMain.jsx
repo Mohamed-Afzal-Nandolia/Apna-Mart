@@ -3,6 +3,8 @@ import { Products } from "./Products"
 import { AddProduct } from "./AddProduct"
 import { SetMinimumOrder } from "./SetMinimumOrder"
 import { AllOrders } from "./AllOrders"
+import { CreateCategory } from "./CreateCategory"
+import { CreateSubCategory } from "./CreateSubCategory"
 
 export const DashboardMain = ({searchParams}) => {
   {
@@ -20,9 +22,14 @@ export const DashboardMain = ({searchParams}) => {
         <SetMinimumOrder />
       )
     }
-    else if(searchParams === "all-orders"){
+    else if(searchParams === "create-category"){
       return (
-        <AllOrders />
+        <CreateCategory />
+      )
+    }
+    else if(searchParams === "create-sub-category"){
+      return (
+        <CreateSubCategory/>
       )
     }
   }

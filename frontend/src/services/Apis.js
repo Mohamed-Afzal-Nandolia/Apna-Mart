@@ -64,3 +64,18 @@ export const getAdminByEmail = (email) => {
     });
   };
   
+export const createCategory = (adminId, categoryName) => { // ASUMING I HAVE CREATED THIS WHICH I HAVE NOT.
+    return axios.post(
+        `${REST_API_BASE_URL}/api/category/create-category`,
+        {
+        adminId,
+        categoryName,
+        },
+        {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("Authorization"),
+        },
+        }
+    );
+}

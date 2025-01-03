@@ -58,6 +58,17 @@ export const AddProduct = () => {
         </h2>
         <div>
           <div className="mb-2 block">
+            <Label htmlFor="productCategory" value="Product Category" />
+          </div>
+          <TextInput
+            id="productCategory"
+            type="text"
+            sizing="md"
+            {...register("i_category")}
+          />
+        </div>
+        <div>
+          <div className="mb-2 block">
             <Label htmlFor="productName" value="Product Name" />
           </div>
           <TextInput

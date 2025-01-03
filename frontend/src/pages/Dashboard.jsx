@@ -8,8 +8,13 @@ import {
   HiTable,
   HiUser,
   HiViewBoards,
+  HiViewList,
+  HiPlus,
+  HiOutlinePlusCircle,
   HiOutlineLogout,
   HiAdjustments,
+  HiServer,
+  HiPlusSm,
 } from "react-icons/hi";
 import Logo from "../assets/apna-mart-logo-png.png";
 import { DashboardMain } from "../components/DashboardMain";
@@ -137,24 +142,26 @@ export const Dashboard = () => {
             >
               Users
             </Sidebar.Item> */}
-            <Sidebar.Collapse icon={HiShoppingBag} label="Products">
-              <Sidebar.Item 
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "products");
-                  return prev;
-                });
-              }}>Product List</Sidebar.Item>
-              <Sidebar.Item 
-              style={{ cursor: "pointer" }} 
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "add-product");
-                  return prev;
-                });
-              }}>Add Product</Sidebar.Item>
-            </Sidebar.Collapse>
+
+            <Sidebar.Item 
+            icon={HiViewList}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setSearchParams((prev) => {
+                prev.set("tab", "products");
+                return prev;
+              });
+            }}>Product List</Sidebar.Item>
+            <Sidebar.Item
+            icon={HiOutlinePlusCircle} 
+            style={{ cursor: "pointer" }} 
+            onClick={() => {
+              setSearchParams((prev) => {
+                prev.set("tab", "add-product");
+                return prev;
+              });
+            }}>Add Product</Sidebar.Item>
+
             {/* <Sidebar.Item
               icon={HiArrowSmRight}
               onClick={() => {
@@ -167,16 +174,6 @@ export const Dashboard = () => {
               Sign In
             </Sidebar.Item> */}
             <Sidebar.Item
-              icon={HiOutlineLogout}
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                localStorage.removeItem("Authorization");
-                navigate("/admin/login");
-              }}
-            >
-              Sign Out
-            </Sidebar.Item>
-            <Sidebar.Item
               icon={HiAdjustments}
               style={{ cursor: "pointer" }}
               onClick={() => {
@@ -188,6 +185,32 @@ export const Dashboard = () => {
             >
               Minimum Order
             </Sidebar.Item>
+            <Sidebar.Collapse icon={HiServer} label="Category">
+              <Sidebar.Item
+                icon={HiPlus}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    prev.set("tab", "create-category");
+                    return prev;
+                  });
+                }}
+              >
+                Create Category
+              </Sidebar.Item>
+              <Sidebar.Item
+                icon={HiPlusSm}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    prev.set("tab", "create-sub-category");
+                    return prev;
+                  });
+                }}
+              >
+                Create Sub Category
+              </Sidebar.Item>
+            </Sidebar.Collapse>
             {/* <Sidebar.Item
               icon={HiClipboardList}
               style={{ cursor: "pointer" }}
@@ -200,6 +223,16 @@ export const Dashboard = () => {
             >
               All Orders
             </Sidebar.Item> */}
+            <Sidebar.Item
+              icon={HiOutlineLogout}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                localStorage.removeItem("Authorization");
+                navigate("/admin/login");
+              }}
+            >
+              Sign Out
+            </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>

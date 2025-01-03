@@ -31,4 +31,6 @@ public class ItemDto {
 
     private Boolean i_availability;
 
+    private String i_category;
+
 }

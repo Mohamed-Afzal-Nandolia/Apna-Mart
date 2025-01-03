@@ -91,7 +91,7 @@ export const SetMinimumOrder = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+          className="bg-gray-700 text-white py-2 rounded-md hover:bg-gray-900 transition"
           disabled={isLoading}
         >
           {isLoading ? "Updating..." : "Set Minimum Value"}

@@ -36,4 +36,7 @@ public class Item {
 
     @Column(name = "i_availability")
     private Boolean i_availability;
+
+    @Column(name = "i_category")
+    private String i_category;
 }
