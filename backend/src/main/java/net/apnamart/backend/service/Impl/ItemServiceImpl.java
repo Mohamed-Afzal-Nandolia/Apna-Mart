@@ -108,30 +108,27 @@ public class ItemServiceImpl implements ItemService{
         return itemDto.getI_quantity() != 0;
     }
 
-//    @Override
-//    public String uploadImageToFileSystem(MultipartFile file) throws IOException {
-//        String filePath = FOLDER_PATH + file.getOriginalFilename();
-//
-//        Item item = itemRepository.save(Item.builder()
-//                .i_name(file.getOriginalFilename())
-//                .i_type(file.getContentType())
-//                .i_image_path(filePath)
-//                .build());
-//
-//        file.transferTo(new File(filePath));
-//
-//        if(item != null){
-//            return "file uploaded Successfully : " + filePath;
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public byte[] downloadImageFromFileSystem(String name) throws IOException {
-//        Optional<Item> imageData = itemRepository.findByI_name(name);
-//        String filePath = imageData.get().getI_image_path();
-//        byte[] images = Files.readAllBytes(new File(filePath).toPath());
-//        return images;
-//    }
+    public List<ItemDto> getItemsByCategory(Long categoryId) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<Item> itemsByCategoryId = itemRepository.findItemsByCategoryId(categoryId);
+        List<ItemDto> itemDtoList = itemsByCategoryId.stream().map((item) -> modelMapper.map(item, ItemDto.class)).collect(Collectors.toList());
+        return itemDtoList;
+    }
+
+    public List<ItemDto> getItemsBySubcategory(Long subcategoryId) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<Item> itemsBySubcategoryId = itemRepository.findItemsBySubcategoryId(subcategoryId);
+        List<ItemDto> itemDtoList = itemsBySubcategoryId.stream().map((item) -> modelMapper.map(item, ItemDto.class)).collect(Collectors.toList());
+        return itemDtoList;
+    }
+
+    public List<ItemDto> getItemsByCategoryAndSubcategory(Long categoryId, Long subcategoryId) {
+        // Assuming you have a repository that supports this query
+        ModelMapper modelMapper = new ModelMapper();
+        List<Item> byCategoryIdAndSubcategoryId = itemRepository.findByCategoryIdAndSubcategoryId(categoryId, subcategoryId);
+        List<ItemDto> itemDtoList = byCategoryIdAndSubcategoryId.stream().map((item) -> modelMapper.map(item, ItemDto.class)).collect(Collectors.toList());
+        return itemDtoList;
+    }
+
 
 }

@@ -37,6 +37,12 @@ public class Item {
     @Column(name = "i_availability")
     private Boolean i_availability;
 
-    @Column(name = "i_category")
-    private String i_category;
+    @ManyToOne
+    @JoinColumn(name = "i_category_id", referencedColumnName = "c_id")
+    private CreateCategory category;
+
+    @ManyToOne
+    @JoinColumn(name = "i_subcategory_id", referencedColumnName = "sc_id")
+    private SubCategory subcategory;
+
 }

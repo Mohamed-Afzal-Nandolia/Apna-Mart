@@ -96,54 +96,6 @@ export const Dashboard = () => {
         </Sidebar.Logo>
         <Sidebar.Items>
           <Sidebar.ItemGroup>
-            {/* <Sidebar.Item
-              icon={HiChartPie}
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "dashboard");
-                  return prev;
-                });
-              }}
-            >
-              Dashboard
-            </Sidebar.Item> */}
-            {/* <Sidebar.Item
-              icon={HiViewBoards}
-              label="Pro"
-              labelColor="dark"
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "kanban");
-                  return prev;
-                });
-              }}
-            >
-              Kanban
-            </Sidebar.Item> */}
-            {/* <Sidebar.Item
-              icon={HiInbox}
-              label="3"
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "inbox");
-                  return prev;
-                });
-              }}
-            >
-              Inbox
-            </Sidebar.Item>
-            <Sidebar.Item
-              icon={HiUser}
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "users");
-                  return prev;
-                });
-              }}
-            >
-              Users
-            </Sidebar.Item> */}
-
             <Sidebar.Item 
             icon={HiViewList}
             style={{ cursor: "pointer" }}
@@ -162,18 +114,6 @@ export const Dashboard = () => {
                 return prev;
               });
             }}>Add Product</Sidebar.Item>
-
-            {/* <Sidebar.Item
-              icon={HiArrowSmRight}
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "signin");
-                  return prev;
-                });
-              }}
-            >
-              Sign In
-            </Sidebar.Item> */}
             <Sidebar.Item
               icon={HiAdjustments}
               style={{ cursor: "pointer" }}
@@ -236,18 +176,6 @@ export const Dashboard = () => {
                 Delete Category
               </Sidebar.Item>
             </Sidebar.Collapse>
-            {/* <Sidebar.Item
-              icon={HiClipboardList}
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set("tab", "all-orders");
-                  return prev;
-                });
-              }}
-            >
-              All Orders
-            </Sidebar.Item> */}
             <Sidebar.Item
               icon={HiOutlineLogout}
               style={{ cursor: "pointer" }}

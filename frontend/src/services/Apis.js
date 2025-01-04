@@ -99,3 +99,40 @@ export const getAdminByEmail = (email) => {
       headers: { Authorization: localStorage.getItem("Authorization") },
     });
   };
+
+  export const getItemsByCategory = async (categoryId) => {
+  try {
+    const response = await axios.get(`${REST_API_BASE_URL}/api/item/by-category/${categoryId}`, {
+      headers: { Authorization: localStorage.getItem("Authorization") },
+    });
+    return response; // Returning the response so the frontend can access the data
+  } catch (error) {
+    console.error("Error fetching items by category:", error);
+    throw error; // Throwing the error so it can be caught in the frontend
+  }
+};
+
+export const getItemsBySubcategory = async (subcategoryId) => {
+  try {
+    const response = await axios.get(`${REST_API_BASE_URL}/api/item/by-subcategory/${subcategoryId}`, {
+      headers: { Authorization: localStorage.getItem("Authorization") },
+    });
+    return response; // Returning the response so the frontend can access the data
+  } catch (error) {
+    console.error("Error fetching items by subcategory:", error);
+    throw error; // Throwing the error so it can be caught in the frontend
+  }
+};
+
+export const getFilteredItems = async (categoryId, subcategoryId) => {
+  try {
+    const response = await axios.get(`${REST_API_BASE_URL}/api/item/filter`, {
+      params: { category: categoryId, subcategory: subcategoryId },
+      headers: { Authorization: localStorage.getItem("Authorization") },
+    });
+    return response.data; // Return filtered items
+  } catch (error) {
+    console.error("Error fetching filtered items:", error);
+    throw error; // Throw error to handle it in the frontend
+  }
+};

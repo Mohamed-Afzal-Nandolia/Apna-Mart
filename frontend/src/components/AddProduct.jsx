@@ -1,18 +1,41 @@
-import {
-  FileInput,
-  Label,
-  TextInput,
-  Textarea,
-  Radio,
-  Button,
-} from "flowbite-react";
-import { useForm } from "react-hook-form";
-import { addProduct } from "../services/Apis";
+import { FileInput, Label, TextInput, Textarea, Radio, Button, Select } from "flowbite-react";
+import { useForm, Controller } from "react-hook-form"; // Import Controller
+import { addProduct, getAllCategories } from "../services/Apis";
 import { toast } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+import { useEffect, useState } from "react";
 
 export const AddProduct = () => {
-  const { register, handleSubmit, reset } = useForm(); // Add reset method
+  const { control, register, handleSubmit, reset } = useForm(); // Add reset method
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+
+  // Fetch categories when the component mounts
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  // Fetch subcategories when the category changes
+  const handleCategoryChange = async (categoryId) => {
+    setSelectedCategory(categoryId); // Update selected category state
+    setSelectedSubcategory(""); // Reset selected subcategory when category changes
+    try {
+      const category = categories.find((cat) => cat.c_id === parseInt(categoryId));
+      setSubcategories(category?.subCategories || []); // Set subcategories for the selected category
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+    }
+  };
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -28,6 +51,8 @@ export const AddProduct = () => {
             i_quantity: data.i_quantity,
             i_description: data.i_description,
             i_availability: data.i_availability,
+            i_category: selectedCategory, // Include selected category
+            i_subcategory: selectedSubcategory, // Include selected subcategory
           }),
         ],
         { type: "application/json" }
@@ -56,17 +81,72 @@ export const AddProduct = () => {
         <h2 className="font-bold text-4xl text-gray-900 px-20">
           Add new product
         </h2>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="productCategory" value="Product Category" />
+
+        {/* Category and Subcategory Selection (Side by Side) */}
+        <div className="flex gap-6">
+          {/* Category Selection */}
+          <div className="w-1/2">
+            <div className="mb-2 block">
+              <Label htmlFor="productCategory" value="Product Category" />
+            </div>
+            <Controller
+              name="i_category"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select
+                  id="productCategory"
+                  {...field}
+                  value={selectedCategory}
+                  onChange={(e) => {
+                    handleCategoryChange(e.target.value);
+                    field.onChange(e.target.value); // Update react-hook-form state
+                  }}
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((category) => (
+                    <option key={category.c_id} value={category.c_id}>
+                      {category.c_name}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
           </div>
-          <TextInput
-            id="productCategory"
-            type="text"
-            sizing="md"
-            {...register("i_category")}
-          />
+
+          {/* Subcategory Selection */}
+          <div className="w-1/2">
+            <div className="mb-2 block">
+              <Label htmlFor="productSubcategory" value="Product Subcategory" />
+            </div>
+            <Controller
+              name="i_subcategory"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select
+                  id="productSubcategory"
+                  {...field}
+                  value={selectedSubcategory}
+                  onChange={(e) => {
+                    setSelectedSubcategory(e.target.value);
+                    field.onChange(e.target.value); // Update react-hook-form state
+                  }}
+                  disabled={!selectedCategory} // Disable if no category is selected
+                >
+                  <option value="">Select Subcategory</option>
+                  {subcategories.map((subcategory) => (
+                    <option key={subcategory.sc_id} value={subcategory.sc_id}>
+                      {subcategory.sc_name}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </div>
         </div>
+
+        {/* Other Form Fields */}
         <div>
           <div className="mb-2 block">
             <Label htmlFor="productName" value="Product Name" />
@@ -78,6 +158,8 @@ export const AddProduct = () => {
             {...register("i_name")}
           />
         </div>
+
+        {/* Product Price */}
         <div>
           <div className="mb-2 block">
             <Label htmlFor="productPrice" value="Product Price (Rs.)" />
@@ -89,6 +171,8 @@ export const AddProduct = () => {
             {...register("i_price")}
           />
         </div>
+
+        {/* Product Quantity */}
         <div>
           <div className="mb-2 block">
             <Label htmlFor="productQuantity" value="Quantity" />
@@ -100,6 +184,8 @@ export const AddProduct = () => {
             {...register("i_quantity")}
           />
         </div>
+
+        {/* Product Description */}
         <div>
           <div className="mb-2 block">
             <Label htmlFor="large" value="Description" />
@@ -112,6 +198,8 @@ export const AddProduct = () => {
             {...register("i_description")}
           />
         </div>
+
+        {/* Product Availability */}
         <fieldset
           className="flex max-w-md gap-4"
           {...register("i_availability")}
@@ -126,6 +214,8 @@ export const AddProduct = () => {
             <Label htmlFor="noOption">No</Label>
           </div>
         </fieldset>
+
+        {/* Product Image Upload */}
         <div id="fileUpload" className="max-w-md">
           <div className="mb-2 block">
             <Label htmlFor="file" value="Upload product image" />
@@ -137,6 +227,7 @@ export const AddProduct = () => {
             {...register("i_file")}
           />
         </div>
+
         <Button type="submit" color="dark">
           Add Product
         </Button>

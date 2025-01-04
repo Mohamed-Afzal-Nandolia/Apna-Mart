@@ -1,5 +1,6 @@
 package net.apnamart.backend.service;
 
+import net.apnamart.backend.entity.Item;
 import net.apnamart.backend.model.ItemDto;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,5 +28,8 @@ public interface ItemService {
     // New method for image upload
     public String uploadImage(MultipartFile file) throws IOException;
 
+    public List<ItemDto> getItemsByCategory(Long categoryId);
+    public List<ItemDto> getItemsBySubcategory(Long subcategoryId);
 
+    public List<ItemDto> getItemsByCategoryAndSubcategory(Long categoryId, Long subcategoryId);
 }

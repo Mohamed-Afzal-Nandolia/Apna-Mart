@@ -1,6 +1,7 @@
 package net.apnamart.backend.controller;
 
 import lombok.AllArgsConstructor;
+import net.apnamart.backend.entity.Item;
 import net.apnamart.backend.model.ItemDto;
 import net.apnamart.backend.service.ItemService;
 import org.springframework.http.HttpStatus;
@@ -68,11 +69,38 @@ public class ItemController {
         return ResponseEntity.ok("Item deleted Successfully");
     }
 
-    /*
-    //Dont need this now as i have merge this in to create-item method
-    @PostMapping("/uploadImage")
-    public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-        return itemService.uploadImage(file);
+    @GetMapping("/by-category/{categoryId}")
+    public ResponseEntity<List<ItemDto>> getItemsByCategory(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(itemService.getItemsByCategory(categoryId));
     }
-    */
+
+    @GetMapping("/by-subcategory/{subcategoryId}")
+    public ResponseEntity<List<ItemDto>> getItemsBySubcategory(@PathVariable Long subcategoryId) {
+        return ResponseEntity.ok(itemService.getItemsBySubcategory(subcategoryId));
+    }
+
+    @GetMapping("/filter-items")
+    public ResponseEntity<List<ItemDto>> getItemsByCategoryAndSubcategory(
+            @RequestParam(value = "category", required = false) Long categoryId,
+            @RequestParam(value = "subcategory", required = false) Long subcategoryId) {
+
+        // If both category and subcategory are provided, filter based on both
+        if (categoryId != null && subcategoryId != null) {
+            return ResponseEntity.ok(itemService.getItemsByCategoryAndSubcategory(categoryId, subcategoryId));
+        }
+
+        // If only category is provided, filter based on category
+        if (categoryId != null) {
+            return ResponseEntity.ok(itemService.getItemsByCategory(categoryId));
+        }
+
+        // If only subcategory is provided, filter based on subcategory
+        if (subcategoryId != null) {
+            return ResponseEntity.ok(itemService.getItemsBySubcategory(subcategoryId));
+        }
+
+        // If neither category nor subcategory is provided, return all items
+        return ResponseEntity.ok(itemService.getAllItems());
+    }
+
 }
