@@ -78,7 +78,7 @@ export const getAdminByEmail = (email) => {
   };
   
   export const getAllCategories = () => {
-    return axios.get(REST_API_BASE_URL + "/category/", {headers: {Authorization: localStorage.getItem("Authorization")}});
+    return axios.get(REST_API_BASE_URL + "/category/");//{headers: {Authorization: localStorage.getItem("Authorization")}}
   };
   
   export const createSubCategory = (categoryId, subCategoryName) => {
@@ -126,9 +126,9 @@ export const getItemsBySubcategory = async (subcategoryId) => {
 
 export const getFilteredItems = async (categoryId, subcategoryId) => {
   try {
-    const response = await axios.get(`${REST_API_BASE_URL}/api/item/filter`, {
+    const response = await axios.get(`${REST_API_BASE_URL}/api/item/filter-items`, {
       params: { category: categoryId, subcategory: subcategoryId },
-      headers: { Authorization: localStorage.getItem("Authorization") },
+      //headers: { Authorization: localStorage.getItem("Authorization") },
     });
     return response.data; // Return filtered items
   } catch (error) {

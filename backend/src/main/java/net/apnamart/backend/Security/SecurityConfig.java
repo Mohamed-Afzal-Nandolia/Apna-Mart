@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/test").authenticated()
                 .requestMatchers("/api/sms/send", "/api/item/by-category/*", "/api/item/by-subcategory/*",//"/category/*","/category/sub-category/*",
-                        "/api/item/filter", "/api/item/filter-items/*",
+                        "/api/item/filter-items", "/api/item/filter-items/*", "/category/",
                         "/api/amount/*", "/api/test-email","/api/user/*","/auth/*",
                         "/auth/admin/*", "/auth/user/*", "/api/item/all-items",
                         "/images/*", "/api/item/*").permitAll() // dont need authentication

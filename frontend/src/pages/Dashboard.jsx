@@ -127,6 +127,18 @@ export const Dashboard = () => {
               Minimum Order
             </Sidebar.Item>
             <Sidebar.Collapse icon={HiServer} label="Category">
+            <Sidebar.Item
+                icon={HiTable}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    prev.set("tab", "all-category");
+                    return prev;
+                  });
+                }}
+              >
+                All Categories
+              </Sidebar.Item>
               <Sidebar.Item
                 icon={HiPlus}
                 style={{ cursor: "pointer" }}
@@ -150,18 +162,6 @@ export const Dashboard = () => {
                 }}
               >
                 Add Sub Category
-              </Sidebar.Item>
-              <Sidebar.Item
-                icon={HiTable}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setSearchParams((prev) => {
-                    prev.set("tab", "all-category");
-                    return prev;
-                  });
-                }}
-              >
-                All Categories
               </Sidebar.Item>
               <Sidebar.Item
                 icon={HiOutlineDocumentRemove}

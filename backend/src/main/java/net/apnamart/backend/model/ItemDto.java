@@ -33,4 +33,6 @@ public class ItemDto {
 
     private String i_category;
 
+    private String i_subcategory;
+
 }

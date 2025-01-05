@@ -39,21 +39,34 @@ export const DiscoverSection = ({ cartItems, updateCartItems }) => {
         if (category && subcategory) {
           // Case 2: Both category and subcategory are selected
           response = await getFilteredItems(category, subcategory);
+          // console.log("Case 2: Both category and subcategory are selected");
+          // console.log("API Response:", response);  // Log the full response
         } else if (category) {
           // Case 1: Only category is selected
           response = await getItemsByCategory(category);
+          // console.log("Case 1: Only category is selected");
+          // console.log("API Response:", response);  // Log the full response
         } else {
           // Case 3: No filters, show all products
           response = { data: allItems };
+          // console.log("Case 3: No filters, show all products");
+          // console.log("API Response:", response);  // Log the full response
         }
-
-        if (response && response.data) {
-          setFilteredItems(response.data); // Update the filtered items state
+    
+        // Handle the case where response is an array directly (for Case 2)
+        if (Array.isArray(response)) {
+          // console.log("Filtered Data:", response);
+          setFilteredItems(response); // Directly use the response if it's an array
+        } else if (response && response.data) {
+          // console.log("Filtered Data:", response.data);
+          setFilteredItems(response.data); // Use response.data if it's wrapped in data
+        } else {
+          console.log("No data in response");
         }
       } catch (error) {
         console.error("Error fetching filtered products:", error);
       }
-    };
+    };    
 
     fetchFilteredProducts();
   }, [category, subcategory, allItems]); // Depend on allItems to fetch filtered items after the initial fetch

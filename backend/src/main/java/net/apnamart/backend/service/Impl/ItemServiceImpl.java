@@ -1,10 +1,14 @@
 package net.apnamart.backend.service.Impl;
 
 import lombok.AllArgsConstructor;
+import net.apnamart.backend.entity.CreateCategory;
 import net.apnamart.backend.entity.Item;
+import net.apnamart.backend.entity.SubCategory;
 import net.apnamart.backend.exception.ResourceNotFoundException;
 import net.apnamart.backend.model.ItemDto;
+import net.apnamart.backend.repository.CreateCategoryRepository;
 import net.apnamart.backend.repository.ItemRepository;
+import net.apnamart.backend.repository.SubCategoryRepository;
 import net.apnamart.backend.service.ItemService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,7 +27,8 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService{
 
     private ItemRepository itemRepository;
-
+    private CreateCategoryRepository categoryRepository;
+    private SubCategoryRepository subCategoryRepository;
     private final String FOLDER_PATH = "D:/GitHub/All Repositories/Apna-Mart/backend/src/main/resources/static/images";
 
     @Override
@@ -48,6 +53,17 @@ public class ItemServiceImpl implements ItemService{
     public ItemDto createItem(ItemDto itemDto) {
         ModelMapper modelMapper = new ModelMapper();
         Item item = modelMapper.map(itemDto, Item.class);
+
+        // Fetch and set category
+        CreateCategory category = categoryRepository.findById(Long.valueOf(itemDto.getI_category()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        item.setI_category(category);
+
+        // Fetch and set subcategory
+        SubCategory subCategory = subCategoryRepository.findById(Long.valueOf(itemDto.getI_subcategory()))
+                .orElseThrow(() -> new ResourceNotFoundException("Subcategory not found"));
+        item.setI_category(category);
+        item.setI_subcategory(subCategory);
 
         // Save the image path and other item details
         Item savedItem = itemRepository.save(item);

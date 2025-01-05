@@ -22,10 +22,16 @@ public class CreateCategory {
     @Column(name = "c_name")
     private String c_name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "i_category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubCategory> subCategories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "i_category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items;
+
+//    @Override
+//    public String toString() {
+//        return "Category{id=" + c_id + ", name='" + c_name + "'}";
+//    }
+
 
 }

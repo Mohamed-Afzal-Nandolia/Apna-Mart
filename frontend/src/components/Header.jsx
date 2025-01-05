@@ -1,13 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // Add useLocation import
 import { isLoggedIn } from "../helpers/loginCheck";
 import { ShoppingCart } from "lucide-react";
 import PropTypes from "prop-types";
 import logo from "../assets/apnamart.jpg";
 import { useEffect, useState } from "react";
-import { getAllCategories } from "../services/Apis"; // Assuming you have this function to get categories
+import { getAllCategories } from "../services/Apis";
 
 export const Header = ({ toggleCart, cartItemsCount }) => {
   const navigate = useNavigate();
+  const location = useLocation(); // Use useLocation to get current location
   const loggedIn = isLoggedIn();
 
   const [categories, setCategories] = useState([]);
@@ -15,11 +16,16 @@ export const Header = ({ toggleCart, cartItemsCount }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
+  // Check if we are on the checkout page
+  const isCheckoutPage = location.pathname === "/checkout";
+  const isPaymentPage = location.pathname === "/payment";
+
   // Fetch categories and subcategories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getAllCategories(); // Fetch categories from API
+        const response = await getAllCategories();
+        //console.log("Fetched Categories:", response.data);
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -28,78 +34,90 @@ export const Header = ({ toggleCart, cartItemsCount }) => {
     fetchCategories();
   }, []);
 
-  // Handle category change
+  // Reset subcategories when selectedCategory changes
+  useEffect(() => {
+    if (selectedCategory) {
+      const category = categories.find((cat) => cat.c_id === parseInt(selectedCategory));
+      setSubcategories(category?.subCategories || []);
+    } else {
+      setSubcategories([]);
+    }
+  }, [selectedCategory, categories]);
+
   const handleCategoryChange = async (categoryId) => {
     setSelectedCategory(categoryId);
     setSelectedSubcategory(""); // Reset subcategory when category changes
-
-    // Fetch subcategories for the selected category
-    const category = categories.find((cat) => cat.c_id === parseInt(categoryId));
-    setSubcategories(category?.subCategories || []); // Set subcategories for the selected category
   };
 
-  // Handle subcategory change
   const handleSubcategoryChange = (subcategoryId) => {
     setSelectedSubcategory(subcategoryId);
   };
 
   const handleFilterSubmit = () => {
-    // Update the URL with selected category and subcategory, which will trigger the useEffect
-    navigate(`?category=${selectedCategory}&subcategory=${selectedSubcategory}`);
-  };  
+    console.log("Filter submitted!");
+    console.log("Selected Category:", selectedCategory);
+    console.log("Selected Subcategory:", selectedSubcategory);
+  
+    if (!selectedCategory) {
+      console.log("No category selected, navigating to home...");
+      navigate('/');
+    } else {
+      // If category is selected, update the URL with the selected category and subcategory
+      const subcategoryQuery = selectedSubcategory ? `&subcategory=${selectedSubcategory}` : '';
+      navigate(`?category=${selectedCategory}${subcategoryQuery}`);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 text-primary-foreground py-4 text-white flex justify-between items-center px-12">
-      {/* Logo */}
       <img
         src={logo}
         alt="APNA MART"
         className="w-52 h-auto cursor-pointer"
         onClick={() => navigate("/")}
       />
-
-      {/* Category and Subcategory Dropdowns next to the logo */}
-      <div className="flex items-center gap-6"> {/* Aligning the dropdowns next to the logo */}
-        {/* Category Dropdown */}
-        <select
-          value={selectedCategory}
-          onChange={(e) => handleCategoryChange(e.target.value)}
-          className="border p-2 rounded text-black"
-        >
-          <option value="">Select Category</option>
-          {categories.map((category) => (
-            <option key={category.c_id} value={category.c_id}>
-              {category.c_name}
-            </option>
-          ))}
-        </select>
-
-        {/* Subcategory Dropdown */}
-        <select
-          value={selectedSubcategory}
-          onChange={(e) => handleSubcategoryChange(e.target.value)}
-          className="border p-2 rounded text-black"
-          disabled={!selectedCategory}
-        >
-          <option value="">Select Subcategory</option>
-          {subcategories.map((subcategory) => (
-            <option key={subcategory.sc_id} value={subcategory.sc_id}>
-              {subcategory.sc_name}
-            </option>
-          ))}
-        </select>
-
-        <button
-          onClick={handleFilterSubmit}
-          className="bg-gray-700 text-white py-2 px-2 rounded-md hover:bg-gray-900 transition"
-          disabled={!selectedCategory}
-        >
-          Apply Filter
-        </button>
-
+  
+      <div className="flex items-center gap-6">
+        {!isCheckoutPage && !isPaymentPage &&( // Only render the select elements if not on checkout page
+          <>
+            <select
+              value={selectedCategory}
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              className="border p-2 rounded text-black"
+            >
+              <option value="">Select Category</option>
+              {categories.map((category) => (
+                <option key={category.c_id} value={category.c_id}>
+                  {category.c_name}
+                </option>
+              ))}
+            </select>
+  
+            <select
+              value={selectedSubcategory}
+              onChange={(e) => handleSubcategoryChange(e.target.value)}
+              className="border p-2 rounded text-black"
+              disabled={!selectedCategory}
+            >
+              <option value="">Select Subcategory</option>
+              {subcategories.map((subcategory) => (
+                <option key={subcategory.sc_id} value={subcategory.sc_id}>
+                  {subcategory.sc_name}
+                </option>
+              ))}
+            </select>
+  
+            <button
+              onClick={handleFilterSubmit}
+              className="bg-gray-700 text-white py-2 px-2 rounded-md hover:bg-gray-900 transition"
+              disabled={!selectedCategory}
+            >
+              Apply Filter
+            </button>
+          </>
+        )}
       </div>
-
-      {/* Cart Icon */}
+  
       <div className="flex items-center gap-8">
         <div className="relative">
           <ShoppingCart

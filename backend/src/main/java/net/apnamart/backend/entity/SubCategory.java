@@ -21,5 +21,11 @@ public class SubCategory {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private CreateCategory category;
+    private CreateCategory i_category;
+
+//    @Override
+//    public String toString() {
+//        return "Category{id=" + sc_id + ", name='" + sc_name + "'}";
+//    }
+
 }

@@ -1,5 +1,6 @@
 package net.apnamart.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,11 +39,14 @@ public class Item {
     private Boolean i_availability;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "i_category_id", referencedColumnName = "c_id")
-    private CreateCategory category;
+    private CreateCategory i_category;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "i_subcategory_id", referencedColumnName = "sc_id")
-    private SubCategory subcategory;
+    private SubCategory i_subcategory;
+
 
 }

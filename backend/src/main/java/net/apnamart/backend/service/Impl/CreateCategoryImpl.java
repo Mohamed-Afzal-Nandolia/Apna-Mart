@@ -46,7 +46,7 @@ public class CreateCategoryImpl implements CreateCategoryService {
 
         SubCategory subCategory = SubCategory.builder()
                 .sc_name(subCategoryDto.getSc_name())
-                .category(category)
+                .i_category(category)
                 .build();
 
         category.getSubCategories().add(subCategory);
