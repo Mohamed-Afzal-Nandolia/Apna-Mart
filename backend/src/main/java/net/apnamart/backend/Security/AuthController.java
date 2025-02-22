@@ -24,7 +24,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.security.Principal;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "${FRONTEND_URL}")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
