@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { REST_API_BASE_URL } from "../services/Apis";
+import { BASE_URL } from "../../config";
 import { addToCart } from "../helpers/addToCart";
 import { Header } from "../components/Header";
 import { useCartItems } from "../hooks/useCartItems";
@@ -20,7 +20,7 @@ export const ItemPage = () => {
     const fetchItemDetails = async () => {
       try {
         const response = await axios.get(
-          `${REST_API_BASE_URL}/api/item/${itemId}`,
+          `${BASE_URL}/api/item/${itemId}`,
           {
             headers: {
               Authorization: localStorage.getItem("Authorization"),
