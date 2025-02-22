@@ -47,26 +47,28 @@ export const Header = ({ toggleCart, cartItemsCount }) => {
   const handleCategoryChange = async (categoryId) => {
     setSelectedCategory(categoryId);
     setSelectedSubcategory(""); // Reset subcategory when category changes
-  };
+    navigate(`?category=${categoryId}`);
+};
 
-  const handleSubcategoryChange = (subcategoryId) => {
-    setSelectedSubcategory(subcategoryId);
-  };
+const handleSubcategoryChange = (subcategoryId) => {
+  setSelectedSubcategory(subcategoryId);
+  navigate(`?category=${selectedCategory}&subcategory=${subcategoryId}`);
+};
 
-  const handleFilterSubmit = () => {
-    console.log("Filter submitted!");
-    console.log("Selected Category:", selectedCategory);
-    console.log("Selected Subcategory:", selectedSubcategory);
+  // const handleFilterSubmit = () => {
+  //   console.log("Filter submitted!");
+  //   console.log("Selected Category:", selectedCategory);
+  //   console.log("Selected Subcategory:", selectedSubcategory);
   
-    if (!selectedCategory) {
-      console.log("No category selected, navigating to home...");
-      navigate('/');
-    } else {
-      // If category is selected, update the URL with the selected category and subcategory
-      const subcategoryQuery = selectedSubcategory ? `&subcategory=${selectedSubcategory}` : '';
-      navigate(`?category=${selectedCategory}${subcategoryQuery}`);
-    }
-  };
+  //   if (!selectedCategory) {
+  //     console.log("No category selected, navigating to home...");
+  //     navigate('/');
+  //   } else {
+  //     // If category is selected, update the URL with the selected category and subcategory
+  //     const subcategoryQuery = selectedSubcategory ? `&subcategory=${selectedSubcategory}` : '';
+  //     navigate(`?category=${selectedCategory}${subcategoryQuery}`);
+  //   }
+  // };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 text-primary-foreground py-4 text-white flex justify-between items-center px-12">
@@ -107,13 +109,13 @@ export const Header = ({ toggleCart, cartItemsCount }) => {
               ))}
             </select>
   
-            <button
+            {/* <button
               onClick={handleFilterSubmit}
               className="bg-gray-700 text-white py-2 px-2 rounded-md hover:bg-gray-900 transition"
               disabled={!selectedCategory}
             >
               Apply Filter
-            </button>
+            </button> */}
           </>
         )}
       </div>

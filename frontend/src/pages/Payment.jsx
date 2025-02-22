@@ -91,11 +91,11 @@ export const Payment = () => {
       
       // Calling the email and sms API for the User
       await postEmail(userEmailData); 
-      await postSms(userSmsData); 
+      // await postSms(userSmsData); 
 
       // Calling the email and sms API for the Admin
       await postEmail(adminEmailData); 
-      await postSms(adminSmsData); 
+      // await postSms(adminSmsData); 
 
       // Clear the cart and show a success message
       updateCartItems([]);
