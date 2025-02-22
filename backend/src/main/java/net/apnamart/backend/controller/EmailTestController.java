@@ -1,22 +1,33 @@
 package net.apnamart.backend.controller;
 
-import net.apnamart.backend.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
+import jakarta.mail.internet.MimeMessage;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "${FRONTEND_URL}")
 @RestController
 @RequestMapping("/api/test-email")
 public class EmailTestController {
 
     @Autowired
-    private EmailService emailService;
+    private JavaMailSender mailSender;  // Using JavaMailSender directly
 
     @PostMapping
     public String sendTestEmail(@RequestBody EmailRequest emailRequest) {
         try {
-            emailService.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getBody());
+            // Create a new email message
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(emailRequest.getTo());
+            helper.setSubject(emailRequest.getSubject());
+            helper.setText(emailRequest.getBody(), true);  // Set 'true' to enable HTML
+
+            mailSender.send(message);
             return "Email sent successfully to " + emailRequest.getTo();
+
         } catch (Exception e) {
             return "Failed to send email: " + e.getMessage();
         }

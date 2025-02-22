@@ -3,10 +3,13 @@ spring:
     name: ApnaMart
 
   datasource:
-    url: jdbc:mysql://localhost:3306/apnamart
+    url: ${DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
+    username: ${DATASOURCE_USER}
+    password: ${DATASOURCE_PASSWORD}
+
+  frontend:
+    url: ${FRONTEND_URL}
 
   jpa:
     hibernate:
@@ -21,25 +24,25 @@ spring:
       max-request-size: 10MB
 
   mail:
-    host:
-    port:
-    username:
-    password:
-    protocol:
+    host: ${HOST}
+    port: ${PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: ${PROTOCOL}
     properties:
-      mail.smtp.auth:
-      mail.smtp.starttls.enable:
+      mail.smtp.auth: ${MAIL_SMTP_AUTH}
+      mail.smtp.starttls.enable: ${MAIL_SMTP_STARTTLS_ENABLE}
 
 server:
-  port:
+  port:${SERVER_PORT}
   # servlet:
   #   context-path: /am
 
 # SMS Configuration
 twilio:
-  account-sid:
-  auth-token:
-  phone-number:
+  account-sid: ${ACCOUNT_SID}
+  auth-token: ${AUTH_TOKEN}
+  phone-number: ${PHONE_NUMBER}
 
 # Logging
 # logging:

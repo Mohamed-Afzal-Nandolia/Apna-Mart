@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "${FRONTEND_URL}")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/category/")
