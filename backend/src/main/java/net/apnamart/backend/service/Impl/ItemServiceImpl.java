@@ -1,5 +1,7 @@
 package net.apnamart.backend.service.Impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;
 import net.apnamart.backend.entity.CreateCategory;
 import net.apnamart.backend.entity.Item;
@@ -29,30 +31,26 @@ public class ItemServiceImpl implements ItemService{
     private ItemRepository itemRepository;
     private CreateCategoryRepository categoryRepository;
     private SubCategoryRepository subCategoryRepository;
-    private final String FOLDER_PATH = "D:/GitHub/All Repositories/Apna-Mart/backend/src/main/resources/static/images";
+    private final Cloudinary cloudinary;
 
     @Override
     public String uploadImage(MultipartFile file) throws IOException {
-        // Ensure the folder exists
-        File folder = new File(FOLDER_PATH);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-        String ImgName = UUID.randomUUID().toString()+".jpg";
-
-        // Save the file to the folder
-        Path filePath = Paths.get(FOLDER_PATH, ImgName);
-        Files.write(filePath, file.getBytes());
-
-        // Return the file path (relative to your app's root directory or as needed)
-        //return filePath.toString();
-        return "http://localhost:8085/images/"+ImgName;
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+        System.out.println(uploadResult);
+        return uploadResult.get("secure_url").toString(); // Returns the Cloudinary image URL
     }
 
     @Override
     public ItemDto createItem(ItemDto itemDto) {
         ModelMapper modelMapper = new ModelMapper();
         Item item = modelMapper.map(itemDto, Item.class);
+
+        if (itemDto.getI_category() == null || itemDto.getI_category().trim().isEmpty()) {
+            throw new IllegalArgumentException("Category ID cannot be empty");
+        }
+        if (itemDto.getI_subcategory() == null || itemDto.getI_subcategory().trim().isEmpty()) {
+            throw new IllegalArgumentException("Subcategory ID cannot be empty");
+        }
 
         // Fetch and set category
         CreateCategory category = categoryRepository.findById(Long.valueOf(itemDto.getI_category()))
