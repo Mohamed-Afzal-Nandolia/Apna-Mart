@@ -134,3 +134,13 @@ export const getFilteredItems = async (categoryId, subcategoryId) => {
     throw error; // Throw error to handle it in the frontend
   }
 };
+
+export const placeOrder = async (orderDetails) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/orders/checkout`, orderDetails);
+    return response.data; // Return filtered items
+  } catch (error) {
+    console.error("Error fetching filtered items:", error);
+    throw error; // Throw error to handle it in the frontend
+  }
+};

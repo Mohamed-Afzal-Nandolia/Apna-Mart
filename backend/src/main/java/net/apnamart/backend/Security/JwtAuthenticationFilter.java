@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -30,11 +31,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    List<String> openEndpoints = List.of(
+            "/",
+            "/api/item/all-items",
+            "/api/orders/checkout"
+    );
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // bypass jwt verification for this url
         String uri = request.getRequestURI();
-        if (uri.equals("/") || uri.equals("/api/item/all-items")) {
+        if (openEndpoints.contains(uri)) {
             filterChain.doFilter(request, response);
             return;
         }

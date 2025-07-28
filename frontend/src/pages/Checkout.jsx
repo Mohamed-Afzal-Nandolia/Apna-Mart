@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useCartItems } from "../hooks/useCartItems";
 import { Header } from "../components/Header";
 import { Loading } from "./Loading";
-import { getAmount } from "../services/Apis";
+import { getAmount, placeOrder } from "../services/Apis";
 import { toast, ToastContainer } from 'react-toastify';
+import axios from "axios";
 
 export const Checkout = () => {
   const navigate = useNavigate();
@@ -64,18 +65,46 @@ export const Checkout = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!isFormValid) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!isFormValid) return;
 
-    // Save form data to localStorage or a global state
-    localStorage.setItem("shippingDetails", JSON.stringify(formData));
+  localStorage.setItem("shippingDetails", JSON.stringify(formData));
 
-    // Here you would typically process the payment and order
-    console.log("Order submitted:", { formData, cartItems, totalPrice });
+    // Step 1: Build a combined item name
+  const combinedItemName = cartItems
+    .map(item => `${item.i_name} x ${item.i_quantity}`)
+    .join(", ");
 
-    navigate("/payment");
+  // Step 2: Calculate total price
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item.i_price * item.i_quantity,
+    0
+  );
+
+  // Step 3: Build single object payload
+  const orderDetails = {
+    i_name: combinedItemName,
+    i_price: totalPrice.toString(), // Convert to string if backend expects string
+    i_quantity: "1", // Since we're aggregating into one virtual item
+    shippingDetails: formData
   };
+
+  try {
+    const data = await placeOrder(orderDetails); // call API function
+    console.log(data)
+    if (data.status === "Success" && data.sessionUrl) {
+      window.location.href = data.sessionUrl; // Redirect to Stripe Checkout
+    } else {
+      console.error("Payment session creation failed:", data);
+      toast.error("Something went wrong. Please try again.");
+    }
+  } catch (error) {
+    console.error("Checkout failed:", error);
+    toast.error("Checkout failed. Try again later.");
+  }
+};
+
 
   if (isLoading) return <Loading />;
 

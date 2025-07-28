@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css"
 import { ItemPage } from "./pages/ItemPage"
 import { Checkout } from "./pages/Checkout"
 import { Payment } from "./pages/Payment"
+import Success from "./pages/Success";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         </Route>
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<NotFound />} />
+        <Route path="/success" element={<Success />} />
         <Route path="/item/:itemId" element={<ItemPage />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
